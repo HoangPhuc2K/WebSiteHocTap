@@ -69,3 +69,18 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+
+.bg-image {
+    background-color: #f8f9fa;
+    background-position: 0% 50%;
+    background-size: cover;
+}
+
+.head-nav{
+    z-index: 2;
+}
+.img-top {
+    background-image: url("../lib/Photo/unnamed.jpg");
+}
