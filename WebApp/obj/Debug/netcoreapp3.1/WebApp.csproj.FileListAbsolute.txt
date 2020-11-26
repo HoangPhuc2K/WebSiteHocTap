@@ -180,7 +180,6 @@ D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebA
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.MvcApplicationPartsAssemblyInfo.cache
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Home2\Index.cshtml.g.cs
-D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
 F:\PornHub\WebSitHocTap\WebApp\bin\Debug\netcoreapp3.1\appsettings.Development.json
 F:\PornHub\WebSitHocTap\WebApp\bin\Debug\netcoreapp3.1\appsettings.json
 F:\PornHub\WebSitHocTap\WebApp\bin\Debug\netcoreapp3.1\WebApp.exe
@@ -364,3 +363,4 @@ F:\PornHub\WebSitHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 F:\PornHub\WebSitHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 F:\PornHub\WebSitHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
 F:\PornHub\WebSitHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
