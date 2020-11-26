@@ -59,8 +59,8 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    /* margin-bottom: 60px;*/
 }
 .footer {
   position: absolute;
@@ -82,5 +82,5 @@ body {
     z-index: 2;
 }
 .img-top {
-    background-image: url("../lib/Photo/unnamed.jpg");
+    background-image: url("../lib/Photo/images.png");
 }
