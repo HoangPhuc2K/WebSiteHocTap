@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace WebApp.Areas.Admin.Models
 {
-    public class CourseModel
+    public class CoachModel
     {
-        
+
     }
 }
-    
