@@ -8820,25 +8820,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\AnhNguyen\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\duchu\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\D\\asp\\doan\\WebApp\\WebApp.csproj",
+      "projectUniqueName": "F:\\FFFFFFFFFFFFF\\PornHub\\WebSiteHocTap\\WebApp\\WebApp.csproj",
       "projectName": "WebApp",
-      "projectPath": "C:\\D\\asp\\doan\\WebApp\\WebApp.csproj",
-      "packagesPath": "C:\\Users\\AnhNguyen\\.nuget\\packages\\",
-      "outputPath": "C:\\D\\asp\\doan\\WebApp\\obj\\",
+      "projectPath": "F:\\FFFFFFFFFFFFF\\PornHub\\WebSiteHocTap\\WebApp\\WebApp.csproj",
+      "packagesPath": "C:\\Users\\duchu\\.nuget\\packages\\",
+      "outputPath": "F:\\FFFFFFFFFFFFF\\PornHub\\WebSiteHocTap\\WebApp\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\AnhNguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\duchu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
