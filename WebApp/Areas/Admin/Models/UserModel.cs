@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApp.Models;
 
 namespace WebApp.Areas.Admin.Models
 {
@@ -20,24 +21,13 @@ namespace WebApp.Areas.Admin.Models
         [StringLength(maximumLength:200,ErrorMessage ="Độ dài không phù hợp",MinimumLength = 12)]
         [Display(Name = "Acount Password")]
         public string AccountPassword { get; set; }
-
-        [Required]
-        [Display(Name = "Email")]
-        [StringLength(maximumLength:200,ErrorMessage ="Độ dài không phù hợp")]
-        public string Email { get; set; }
-
-        [Required]
-        [Display(Name = "Address")]
-        [StringLength(maximumLength: 1000, ErrorMessage = "Độ dài không phù hợp",MinimumLength = 16)]
-        public string Address { get; set; }
-
-        [Required]
-        [Display(Name = "Phone Number")]
-        [StringLength(maximumLength: 10, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 10)]
-        public string Phone { get; set; }
             
         public int IdRoles { get; set; }
-        [ForeignKey("IDRoles")]
+        [ForeignKey("IdRoles")]
         public virtual RolesModel Roles { get; set; }
+        ICollection<AdminModel> AdminModel { get; set; }
+        ICollection<AdminForumModel> AdminForum { get; set; }
+        ICollection<StudentModel> StudentModel { get; set; }
+        ICollection<CoachModel> Coach { get; set; }
     }
 }

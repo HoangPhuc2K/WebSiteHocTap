@@ -4,11 +4,10 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp.Areas.Admin.Models;
 
-namespace WebApp.Models
+namespace WebApp.Areas.Admin.Models
 {
-    public class StudentModel
+    public class AdminModel
     {
         [Key]
         public int Id { get; set; }
@@ -29,12 +28,9 @@ namespace WebApp.Models
         [Display(Name = "Phone Number")]
         [StringLength(maximumLength: 10, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 10)]
         public string Phone { get; set; }
-
         public int IdUser { get; set; }
         [ForeignKey("IdUser")]
+
         public virtual UserModel User { get; set; }
-
-        public ICollection<PostModel> Post { get; set; }
-
     }
 }

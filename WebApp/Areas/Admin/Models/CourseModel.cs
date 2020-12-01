@@ -8,7 +8,21 @@ namespace WebApp.Areas.Admin.Models
 {
     public class CourseModel
     {
-        
+        [Key]
+        public int Id { set; get; }
+
+        [Required]
+        [Display(Name = "Title")]
+        [StringLength(maximumLength: 200, ErrorMessage = "Độ dài không phù hợp")]
+        public string Title { get; set; }
+
+        [Required]
+        [Display(Name = "Description")]
+        [StringLength(maximumLength: 300, ErrorMessage = "Độ dài không phù hợp")]
+        public string Description { get; set; }
+
+        public ICollection<LessonModel> Lesson { get; set; }
+
     }
 }
     

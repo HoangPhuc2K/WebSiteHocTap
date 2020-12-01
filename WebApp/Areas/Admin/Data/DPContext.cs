@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Areas.Admin.Models;
+using WebApp.Models;
 
 namespace WebApp.Areas.Admin.Data
 {
@@ -18,7 +19,10 @@ namespace WebApp.Areas.Admin.Data
         public DbSet<PostModel> Post { get; set; }
         public DbSet<LessonModel> Lesson { get; set; }
         public DbSet<CourseModel> Course { get; set; }
+        public DbSet<CoachModel> Coach { get; set; }
         public DbSet<CommemtPostModel> CommemtPost { get; set; }
         public DbSet<CommemtLessonModel> CommemtLesson { get; set; }
+        public DbSet<AdminModel> Admin { get; set; }
+        public DbSet<AdminForumModel> AdminForum { get; set; }
     }
 }
