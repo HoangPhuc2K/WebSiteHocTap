@@ -364,3 +364,12 @@ F:\PornHub\WebSitHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 F:\PornHub\WebSitHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
 F:\PornHub\WebSitHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.AssemblyInfoInputs.cache
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.AssemblyInfo.cs
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.csproj.CoreCompileInputs.cache
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.MvcApplicationPartsAssemblyInfo.cache
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.RazorAssemblyInfo.cache
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.RazorAssemblyInfo.cs
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
+E:\Do an\asp net\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
