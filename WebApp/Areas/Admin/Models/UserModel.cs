@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApp.Models;
+using WebApp.Areas.Admin.Models;
 
 namespace WebApp.Areas.Admin.Models
 {
@@ -21,7 +21,12 @@ namespace WebApp.Areas.Admin.Models
         [StringLength(maximumLength:200,ErrorMessage ="Độ dài không phù hợp",MinimumLength = 12)]
         [Display(Name = "Acount Password")]
         public string AccountPassword { get; set; }
-            
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("AccountPassword", ErrorMessage = "Password không trùng khớp")]
+        public string ConfirmPassword { get; set; }
+
         public int IdRoles { get; set; }
         [ForeignKey("IdRoles")]
         public virtual RolesModel Roles { get; set; }

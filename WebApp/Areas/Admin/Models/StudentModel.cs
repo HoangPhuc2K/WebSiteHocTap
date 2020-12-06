@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApp.Areas.Admin.Models;
 
-namespace WebApp.Models
+namespace WebApp.Areas.Admin.Models
 {
     public class StudentModel
     {

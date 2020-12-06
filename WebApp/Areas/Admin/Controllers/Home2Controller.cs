@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp.Areas.Admin.Controllers
 {
+    [Area("Admin_WebSite")]
     public class Home2Controller : Controller
     {
         public IActionResult Index()

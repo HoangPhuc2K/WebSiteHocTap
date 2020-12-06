@@ -58,7 +58,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,IdRoles")] UserModel userModel)
+        public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,ConfirmPassword,IdRoles")] UserModel userModel)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AccountName,AccountPassword,IdRoles")] UserModel userModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AccountName,AccountPassword,ConfirmPassword,IdRoles")] UserModel userModel)
         {
             if (id != userModel.Id)
             {
