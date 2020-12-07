@@ -10,6 +10,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Admin.Data;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace WebApp
 {
@@ -25,6 +30,46 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           
+            services.AddAuthentication("SecurityScheme")
+                .AddCookie("SecurityScheme", options =>
+                {
+                    options.AccessDeniedPath = new PathString("/Admin/User/Access");
+                    options.Cookie = new CookieBuilder
+                    {
+                        //Domain = "",
+                        HttpOnly = true,
+                        Name = ".aspNetCoreDemo.Security.Cookie",
+                        Path = "/",
+                        SameSite = SameSiteMode.Lax,
+                        SecurePolicy = CookieSecurePolicy.SameAsRequest
+                    };
+                    options.Events = new CookieAuthenticationEvents
+                    {
+                        OnSignedIn = context =>
+                        {
+                            Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                                "OnSignedIn", context.Principal.Identity.Name);
+                            return Task.CompletedTask;
+                        },
+                        OnSigningOut = context =>
+                        {
+                            Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                                "OnSigningOut", context.HttpContext.User.Identity.Name);
+                            return Task.CompletedTask;
+                        },
+                        OnValidatePrincipal = context =>
+                        {
+                            Console.WriteLine("{0} - {1}: {2}", DateTime.Now,
+                                "OnValidatePrincipal", context.Principal.Identity.Name);
+                            return Task.CompletedTask;
+                        }
+                    };
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                    options.LoginPath = new PathString("/Admin/User/Login");
+                    options.ReturnUrlParameter = "RequestPath";
+                    options.SlidingExpiration = false;
+                });
             services.AddControllersWithViews();
             services.AddDbContext<DPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DPContext")));
         }
@@ -44,10 +89,10 @@ namespace WebApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -60,6 +105,9 @@ namespace WebApp
                 endpoints.MapControllerRoute(
                    name: "default",
                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute(
+                   name: "Home",
+                   pattern: "Home/Index/{id?}");
             });
         }
     }

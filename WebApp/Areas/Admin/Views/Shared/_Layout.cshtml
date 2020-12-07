@@ -40,6 +40,21 @@
             </div>
         </div>
     </div>
+    <div class="modal" tabindex="-1" role="dialog" id="form-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="~/Template/vendor/jquery/jquery.min.js"></script>
@@ -47,9 +62,10 @@
 
     <!-- Core plugin JavaScript-->
     <script src="~/Template/vendor/jquery-easing/jquery.easing.min.js"></script>
-
     <!-- Custom scripts for all pages-->
     <script src="~/Template/js/sb-admin-2.min.js"></script>
+    <script src="~/js/Ajax.js"></script>
+
     @RenderSection("Script", required: false);
 </body>
 </html>

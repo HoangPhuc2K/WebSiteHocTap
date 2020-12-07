@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Admin.Data;
 using WebApp.Areas.Admin.Models;
+using static WebApp.Helper;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -44,10 +45,22 @@ namespace WebApp.Areas.Admin.Controllers
             return View(rolesModel);
         }
 
-        // GET: Admin/Roles/Create
-        public IActionResult Create()
+        // Admin/Roles/AddOrEdit
+        // GET: Transaction/AddOrEdit/5(Update)
+        [NoDirectAccess]
+        public async Task<IActionResult> AddOrEdit(int id = 0)
         {
-            return View();
+            if (id == 0)
+                return View(new RolesModel());
+            else
+            {
+                var rolesModel = await _context.Roles.FindAsync(id);
+                if (rolesModel == null)
+                {
+                    return NotFound();
+                }
+                return View(rolesModel);
+            }
         }
 
         // POST: Admin/Roles/Create
@@ -55,66 +68,36 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] RolesModel rolesModel)
+        public async Task<IActionResult> AddOrEdit(int id,[Bind("Id,Name")] RolesModel rolesModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(rolesModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(rolesModel);
-        }
-
-        // GET: Admin/Roles/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var rolesModel = await _context.Roles.FindAsync(id);
-            if (rolesModel == null)
-            {
-                return NotFound();
-            }
-            return View(rolesModel);
-        }
-
-        // POST: Admin/Roles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] RolesModel rolesModel)
-        {
-            if (id != rolesModel.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                //Insert
+                if (id == 0)
                 {
-                    _context.Update(rolesModel);
+                    _context.Add(rolesModel);
                     await _context.SaveChangesAsync();
+
                 }
-                catch (DbUpdateConcurrencyException)
+                //Update
+                else
                 {
-                    if (!RolesModelExists(rolesModel.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(rolesModel);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!RolesModelExists(rolesModel.Id))
+                        { return NotFound(); }
+                        else
+                        { throw; }
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Roles.ToList()) });
             }
-            return View(rolesModel);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", rolesModel) });
         }
 
         // GET: Admin/Roles/Delete/5

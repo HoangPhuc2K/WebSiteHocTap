@@ -10,22 +10,18 @@ namespace WebApp.Areas.Admin.Models
 {
     public class UserModel
     {
+
         [Key]
         public int Id { get; set; }
 
         [Required(ErrorMessage ="Nhập Đầy Đủ Thông Tin")]
-        [StringLength(maximumLength:200, ErrorMessage = "Độ Dài Phải Qua 200 Ký Tự",MinimumLength = 16)]
+        [StringLength(maximumLength:200, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 8)]
         [Display(Name = "Account Name")]
         public string AccountName { get; set; }
 
-        [StringLength(maximumLength:200,ErrorMessage ="Độ dài không phù hợp",MinimumLength = 12)]
+        [StringLength(maximumLength:200,ErrorMessage ="Độ dài không phù hợp",MinimumLength = 8)]
         [Display(Name = "Acount Password")]
         public string AccountPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("AccountPassword", ErrorMessage = "Password không trùng khớp")]
-        public string ConfirmPassword { get; set; }
 
         public int IdRoles { get; set; }
         [ForeignKey("IdRoles")]

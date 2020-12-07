@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -58,7 +60,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,ConfirmPassword,IdRoles")] UserModel userModel)
+        public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,IdRoles")] UserModel userModel)
         {
             if (ModelState.IsValid)
             {
@@ -156,6 +158,105 @@ namespace WebApp.Areas.Admin.Controllers
         private bool UserModelExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+        public IActionResult Login(string requestPath)
+        {
+            ViewBag.RequestPath = requestPath ?? "/";
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+
+            var result = _context.User.Where(sp => sp.AccountName == model.UserName && sp.AccountPassword == model.Password).FirstOrDefault();
+            if(result == null)
+            {
+                return View();
+            }
+            // create claims
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, result.AccountName),
+                new Claim(ClaimTypes.Role, result.IdRoles.ToString()),
+            };
+
+            // create identity
+            ClaimsIdentity identity = new ClaimsIdentity(claims, model.UserName);
+
+            // create principal
+            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+            // sign-in
+            await HttpContext.SignInAsync(
+                    scheme: "SecurityScheme",
+                    principal: principal,
+                    properties: new AuthenticationProperties
+                    {
+                        IsPersistent =  true, // for 'remember me' feature
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(60)
+                    });
+
+            return Redirect(model.RequestPath ?? "/");
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                UserModel user = new UserModel();
+                user.AccountName = model.UserName;
+                user.AccountPassword = model.Password;
+                user.IdRoles = 1;
+                _context.Add(user);
+                await _context.SaveChangesAsync();
+                var result = _context.User.Where(sp => sp.AccountName == model.UserName && sp.AccountPassword == model.Password).FirstOrDefault();
+                if (result == null)
+                {
+                    return View();
+                }
+                // create claims
+                List<Claim> claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, result.AccountName),
+                    new Claim(ClaimTypes.Role, result.IdRoles.ToString()),
+                };
+
+                // create identity
+                ClaimsIdentity identity = new ClaimsIdentity(claims, model.UserName);
+
+                // create principal
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+
+                // sign-in
+                await HttpContext.SignInAsync(
+                        scheme: "SecurityScheme",
+                        principal: principal,
+                        properties: new AuthenticationProperties
+                        {
+                            IsPersistent = true, // for 'remember me' feature
+                        ExpiresUtc = DateTime.UtcNow.AddMinutes(60)
+                        });
+                return RedirectToRoute("Home");
+            }
+            return View();
+        }
+        public async Task<IActionResult> Logout(string requestPath)
+        {
+            await HttpContext.SignOutAsync(
+                    scheme: "SecurityScheme");
+
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult Access()
+        {
+            return View();
         }
     }
 }
