@@ -456,3 +456,8 @@ F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\
 F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Details.cshtml.g.cs
 F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Edit.cshtml.g.cs
 F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Index.cshtml.g.cs
+F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coach\Create.cshtml.g.cs
+F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coach\Delete.cshtml.g.cs
+F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coach\Details.cshtml.g.cs
+F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coach\Edit.cshtml.g.cs
+F:\PornHub\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Coach\Index.cshtml.g.cs
