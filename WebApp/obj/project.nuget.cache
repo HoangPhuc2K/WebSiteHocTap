@@ -1,12 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "TLZ9mT2qUyAGiNwR+dCP1zwZZpn0+eqq4NOOBwvtYZz8OhoyMJkOw2RZN5mW5r9ebuA6CnW8+sWJ3EhUxUNGBA==",
+  "dgSpecHash": "bdE6FrQdgAM6Ng5/GXL+mC06g2m9gNgST2X/H52NWVHeoctnwO6hZplj8x3e2DB4jTHM9bSGD0VMWqWujE+a9Q==",
   "success": true,
   "projectFilePath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\Project\\WebApp\\WebApp.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.authentication.azuread.ui\\3.1.9\\microsoft.aspnetcore.authentication.azuread.ui.3.1.9.nupkg.sha512",
-    "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\3.1.9\\microsoft.aspnetcore.authentication.jwtbearer.3.1.9.nupkg.sha512",
-    "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\3.1.9\\microsoft.aspnetcore.authentication.openidconnect.3.1.9.nupkg.sha512",
     "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",

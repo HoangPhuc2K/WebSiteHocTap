@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,9 +9,10 @@ using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Admin.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebApp
 {
@@ -68,7 +66,7 @@ namespace WebApp
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = new PathString("/Admin/User/Login");
                     options.ReturnUrlParameter = "RequestPath";
-                    options.SlidingExpiration = false;
+                    options.SlidingExpiration = true;
                 });
             services.AddControllersWithViews();
             services.AddDbContext<DPContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DPContext")));

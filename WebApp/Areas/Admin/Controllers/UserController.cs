@@ -168,17 +168,19 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-
-            var result = _context.User.Where(sp => sp.AccountName == model.UserName && sp.AccountPassword == model.Password).FirstOrDefault();
-            if(result == null)
+            var result = _context.User.Where(
+                    s => s.AccountName == model.UserName && s.AccountPassword == model.Password
+                ).FirstOrDefault();
+            var Roles = _context.Roles.Find(result.IdRoles);
+            if (result == null)
             {
                 return View();
             }
             // create claims
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, result.AccountName),
-                new Claim(ClaimTypes.Role, result.IdRoles.ToString()),
+                    new Claim(ClaimTypes.Name, result.AccountName),
+                    new Claim(ClaimTypes.Role, Roles.Name),
             };
 
             // create identity
@@ -212,10 +214,10 @@ namespace WebApp.Areas.Admin.Controllers
                 UserModel user = new UserModel();
                 user.AccountName = model.UserName;
                 user.AccountPassword = model.Password;
-                user.IdRoles = 1;
+                user.IdRoles = 2;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                var result = _context.User.Where(sp => sp.AccountName == model.UserName && sp.AccountPassword == model.Password).FirstOrDefault();
+                var result = _context.User.Where(sp => sp.AccountName == model.UserName && sp.AccountPassword == model.Password).Include(s => s.Roles).FirstOrDefaultAsync();
                 if (result == null)
                 {
                     return View();
@@ -223,8 +225,8 @@ namespace WebApp.Areas.Admin.Controllers
                 // create claims
                 List<Claim> claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, result.AccountName),
-                    new Claim(ClaimTypes.Role, result.IdRoles.ToString()),
+                    new Claim(ClaimTypes.Name, result.Result.AccountName),
+                    new Claim(ClaimTypes.Role, result.Result.Roles.Name),
                 };
 
                 // create identity
