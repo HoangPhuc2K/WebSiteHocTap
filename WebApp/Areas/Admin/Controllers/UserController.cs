@@ -256,7 +256,7 @@ namespace WebApp.Areas.Admin.Controllers
             await HttpContext.SignOutAsync(
                     scheme: "SecurityScheme");
 
-            return RedirectToAction("Login");
+            return RedirectToAction("Login");   
         }
 
         public IActionResult Access()

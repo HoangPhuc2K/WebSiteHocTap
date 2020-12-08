@@ -702,3 +702,4 @@ F:\PornHub\cc\New folder (2)\WebApp\obj\Debug\netcoreapp3.1\WebApp.csproj.CopyCo
 F:\PornHub\cc\New folder (2)\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 F:\PornHub\cc\New folder (2)\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 F:\PornHub\cc\New folder (2)\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
