@@ -175,10 +175,15 @@ namespace WebApp.Areas.Admin.Controllers
                 return View();
             }
             // create claims
+            string roles = null;
+            if(result.IdRoles == 1)
+            {
+                roles = "Admin";
+            }    
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, result.AccountName),
-                new Claim(ClaimTypes.Role, result.IdRoles.ToString()),
+                new Claim(ClaimTypes.Role, roles),
             };
 
             // create identity
