@@ -469,4 +469,3 @@ D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razo
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Details.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Edit.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Index.cshtml.g.cs
-D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache

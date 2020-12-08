@@ -217,7 +217,10 @@ namespace WebApp.Areas.Admin.Controllers
                 user.IdRoles = 2;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                var result = _context.User.Where(sp => sp.AccountName == model.UserName && sp.AccountPassword == model.Password).Include(s => s.Roles).FirstOrDefaultAsync();
+                var result = _context.User.Where(
+                    s => s.AccountName == model.UserName && s.AccountPassword == model.Password
+                ).FirstOrDefault();
+                var Roles = _context.Roles.Find(result.IdRoles);
                 if (result == null)
                 {
                     return View();
@@ -225,8 +228,8 @@ namespace WebApp.Areas.Admin.Controllers
                 // create claims
                 List<Claim> claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, result.Result.AccountName),
-                    new Claim(ClaimTypes.Role, result.Result.Roles.Name),
+                    new Claim(ClaimTypes.Name, result.AccountName),
+                    new Claim(ClaimTypes.Role, Roles.Name),
                 };
 
                 // create identity
@@ -242,7 +245,7 @@ namespace WebApp.Areas.Admin.Controllers
                         properties: new AuthenticationProperties
                         {
                             IsPersistent = true, // for 'remember me' feature
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(60)
+                            ExpiresUtc = DateTime.UtcNow.AddMinutes(60)
                         });
                 return RedirectToRoute("Home");
             }
