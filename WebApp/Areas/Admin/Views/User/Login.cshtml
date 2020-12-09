@@ -3,7 +3,6 @@
     ViewData["Title"] = "Login";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutLogin.cshtml";
 }
-
 <div class="d-flex justify-content-center h-100">
     <div class="card">
         <div class="card-header">
@@ -15,23 +14,25 @@
             </div>
         </div>
         <div class="card-body">
-            <form asp-controller="User" asp-action="Login" method="post" class="form">
-                <input type="hidden" name="requestpath" id="requestpath" value="@ViewBag.RequestPath" />
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="RequestPath" value="@ViewBag.RequestPath" />
                 <div class="input-group form-group">
-                    <div class="input-group-prepend">
+                    <div class="input-group-prepend ">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                     </div>
-                    <input class="form-control" type="text" name="UserName" id="username" />
-
+                    <input asp-for="UserName" class="form-control w-75" required />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                     </div>
-                    <input class="form-control" type="password" name="Password" id="password" />
+                    <input asp-for="Password" class="form-control w-75" required />
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="row align-items-center remember">
-                    <input type="checkbox">Nhớ Đăng Nhập
+                    <input asp-for="Remember">Nhớ mật khẩu
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Đăng Nhập" class="btn float-right login_btn">
@@ -40,7 +41,7 @@
         </div>
         <div class="card-footer">
             <div class="d-flex justify-content-center links">
-                Bạn Chưa Có Tài Khoản ?<a href="#">Đăng Kí</a>
+                Bạn Chưa Có Tài Khoản ?<a asp-area="Admin" asp-controller="User" asp-action="Register">Đăng Kí</a>
             </div>
             <div class="d-flex justify-content-center">
                 <a href="#">Quên Mật Khẩu?</a>
@@ -48,3 +49,4 @@
         </div>
     </div>
 </div>
+

@@ -8,12 +8,14 @@ namespace WebApp.Areas.Admin.Models
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage ="")]
+        [Required(ErrorMessage = "Không được bỏ trống")]
         public string UserName { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Không được bỏ trống")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        public bool Remember { get; set; }
         public string RequestPath { get; set; }
     }
 }

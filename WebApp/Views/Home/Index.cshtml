@@ -56,45 +56,56 @@
                             </ul>
 
                         </div>
+                        @if (!Context.User.Identity.IsAuthenticated)
+                        {
+                            <div class="middle mt-sm-3 col-sm-6 text-right">
+                                <ul class="social mb-3">
+                                    <li><a asp-area="Admin" asp-controller="User" asp-action="Login" class="btn btn-info">Đăng Nhập</a></li>
+                                    <li><a asp-area="Admin" asp-controller="User" asp-action="Register" class="btn btn-info">Đăng Kí</a></li>
+                                </ul>
 
+                            </div>
+                        }
 
+                        @if (Context.User.Identity.IsAuthenticated)
+                        {
+                            <!-- Topbar Navbar -->
+                            <ul class="navbar-nav ml-auto">
 
-                        <!-- Topbar Navbar -->
-                        <ul class="navbar-nav ml-auto">
+                                <div class="topbar-divider d-none d-sm-block"></div>
 
-                            <div class="topbar-divider d-none d-sm-block"></div>
-
-                            <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-white small">@Context.User.Identity.Name</span>
-                                    <img class="img-profile rounded-circle"
-                                         src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                                </a>
-                                <!-- Dropdown - User Information -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Trang cá nhân
+                                <!-- Nav Item - User Information -->
+                                <li class="nav-item dropdown no-arrow">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-white small">@Context.User.Identity.Name</span>
+                                        <img class="img-profile rounded-circle"
+                                             src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
                                     </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Cài đặt
-                                    </a>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Hoạt động gần đây
-                                    </a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                        <i class="fa fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Đăng xuất
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
+                                    <!-- Dropdown - User Information -->
+                                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                         aria-labelledby="userDropdown">
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Trang cá nhân
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Cài đặt
+                                        </a>
+                                        <a class="dropdown-item" href="#">
+                                            <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Hoạt động gần đây
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Logout">
+                                            <i class="fa fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Đăng xuất
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        }
                     </div>
                         <!-- nav -->
                         <nav class="pt-4 d-lg-flex">

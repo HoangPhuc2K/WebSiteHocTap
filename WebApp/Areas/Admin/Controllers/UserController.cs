@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/User
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             var dPContext = _context.User.Include(u => u.Roles);
@@ -30,6 +32,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/User/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,6 +52,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/User/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             ViewData["IdRoles"] = new SelectList(_context.Roles, "Id", "Name");
@@ -60,6 +64,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,IdRoles")] UserModel userModel)
         {
             if (ModelState.IsValid)
@@ -73,6 +78,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/User/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -94,6 +100,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,AccountName,AccountPassword,ConfirmPassword,IdRoles")] UserModel userModel)
         {
             if (id != userModel.Id)
@@ -126,6 +133,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/User/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,6 +155,7 @@ namespace WebApp.Areas.Admin.Controllers
         // POST: Admin/User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var userModel = await _context.User.FindAsync(id);
@@ -154,7 +163,6 @@ namespace WebApp.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool UserModelExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
@@ -190,14 +198,27 @@ namespace WebApp.Areas.Admin.Controllers
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
             // sign-in
-            await HttpContext.SignInAsync(
-                    scheme: "SecurityScheme",
-                    principal: principal,
-                    properties: new AuthenticationProperties
-                    {
-                        IsPersistent =  true, // for 'remember me' feature
-                        ExpiresUtc = DateTime.UtcNow.AddMinutes(60)
+            if (model.Remember)
+            {
+                await HttpContext.SignInAsync(
+                        scheme: "SecurityScheme",
+                        principal: principal,
+                        properties: new AuthenticationProperties
+                        {
+                            IsPersistent = true, // for 'remember me' feature
                     });
+            }
+            else
+            {
+                await HttpContext.SignInAsync(
+                        scheme: "SecurityScheme",
+                        principal: principal,
+                        properties: new AuthenticationProperties
+                        {
+                            IsPersistent = true, // for 'remember me' feature
+                            ExpiresUtc = DateTime.UtcNow.AddDays(10)
+                        });
+            }
 
             return Redirect(model.RequestPath ?? "/");
         }
@@ -256,7 +277,7 @@ namespace WebApp.Areas.Admin.Controllers
             await HttpContext.SignOutAsync(
                     scheme: "SecurityScheme");
 
-            return RedirectToAction("Login");   
+            return RedirectToAction("Login"); 
         }
 
         public IActionResult Access()
