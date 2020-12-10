@@ -12,27 +12,23 @@ namespace WebApp.Areas.Admin.Models
         [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Nhập Đầy Đủ Thông Tin")]
-        [StringLength(maximumLength: 200, ErrorMessage = "Độ Dài Phải Qua 200 Ký Tự", MinimumLength = 16)]
-        [Display(Name = "Account Name")]
-        public string AccountName { get; set; }
+        [Required(ErrorMessage = "Không Được Bỏ Trống")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Mật Khẩu Dài Hơn 8 Ký Tự", MinimumLength = 8)]
+        [Display(Name = "Họ Và Tên")]
+        public string FullName { get; set; }
 
-        [StringLength(maximumLength: 200, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 12)]
-        [Display(Name = "Acount Password")]
-        public string AccountPassword { get; set; }
-
-        [Required]
-        [Display(Name = "Email")]
-        [StringLength(maximumLength: 200, ErrorMessage = "Độ dài không phù hợp")]
+        [EmailAddress(ErrorMessage = "Vui Lòng Nhập Vào 1 E-Mail Hợp Lệ")]
+        [StringLength(maximumLength: 300, MinimumLength = 8)]
+        [Display(Name = "E-Mail")]
         public string Email { get; set; }
 
-        [Required]
-        [Display(Name = "Address")]
-        [StringLength(maximumLength: 1000, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 16)]
+        [Required(ErrorMessage = "Không Được Bỏ Trống")]
+        [StringLength(maximumLength: 300, ErrorMessage = "Mật Khẩu Dài Hơn 8 Ký Tự", MinimumLength = 8)]
+        [Display(Name = "Địa Chỉ")]
         public string Address { get; set; }
-
-        [Required]
-        [Display(Name = "Phone Number")]
+        [Required(ErrorMessage = "Không Được Bỏ Trống")]
+        [Display(Name = "Số Điện Thoại")]
+        [DataType(DataType.PhoneNumber)]
         [StringLength(maximumLength: 10, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 10)]
         public string Phone { get; set; }
         public int IdUser { get; set; }

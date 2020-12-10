@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,6 @@ using WebApp.Areas.Admin.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class CoachController : Controller
     {
@@ -60,7 +58,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,Email,Address,Phone,IdUser")] CoachModel coachModel)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Address,Phone,IdUser")] CoachModel coachModel)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +92,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AccountName,AccountPassword,Email,Address,Phone,IdUser")] CoachModel coachModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Address,Phone,IdUser")] CoachModel coachModel)
         {
             if (id != coachModel.Id)
             {

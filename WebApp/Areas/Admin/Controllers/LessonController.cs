@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,6 @@ using WebApp.Areas.Admin.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class LessonController : Controller
     {
@@ -52,7 +50,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/Lesson/Create
         public IActionResult Create()
         {
-            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "AccountName");
+            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address");
             ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description");
             return View();
         }
@@ -70,7 +68,7 @@ namespace WebApp.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "AccountName", lessonModel.IdCoach);
+            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address", lessonModel.IdCoach);
             ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description", lessonModel.IdCourse);
             return View(lessonModel);
         }
@@ -88,7 +86,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "AccountName", lessonModel.IdCoach);
+            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address", lessonModel.IdCoach);
             ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description", lessonModel.IdCourse);
             return View(lessonModel);
         }
@@ -125,7 +123,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "AccountName", lessonModel.IdCoach);
+            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address", lessonModel.IdCoach);
             ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description", lessonModel.IdCourse);
             return View(lessonModel);
         }

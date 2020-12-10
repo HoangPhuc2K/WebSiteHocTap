@@ -49,10 +49,23 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminForum/Create
-        public IActionResult Create()
+        public async Task<IActionResult> AddOrEdit(int id = 0)
         {
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
-            return View();
+            if (id == 0)
+            {
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
+                return View(new AdminForumModel());
+            }
+            else
+            {
+                var adminForumModel = await _context.AdminForum.FindAsync(id);
+                if (adminForumModel == null)
+                {
+                    return NotFound();
+                }
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName",adminForumModel.Id);
+                return View(adminForumModel);
+            }
         }
 
         // POST: Admin/AdminForum/Create
@@ -60,69 +73,38 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Address,Phone,IdUser")] AdminForumModel adminForumModel)
+        public async Task<IActionResult> AddOrEdit(int id,[Bind("Id,FullName,Email,Address,Phone,IdUser")] AdminForumModel adminForumModel)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(adminForumModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.IdUser);
-            return View(adminForumModel);
-        }
-
-        // GET: Admin/AdminForum/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var adminForumModel = await _context.AdminForum.FindAsync(id);
-            if (adminForumModel == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.IdUser);
-            return View(adminForumModel);
-        }
-
-        // POST: Admin/AdminForum/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Address,Phone,IdUser")] AdminForumModel adminForumModel)
-        {
-            if (id != adminForumModel.Id)
-            {
-                return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
-                try
+                // Insert
+                if (id == 0)
                 {
-                    _context.Update(adminForumModel);
+                    _context.Add(adminForumModel);
                     await _context.SaveChangesAsync();
+
                 }
-                catch (DbUpdateConcurrencyException)
+                //Update
+                else
                 {
-                    if (!AdminForumModelExists(adminForumModel.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(adminForumModel);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!AdminForumModelExists(adminForumModel.Id))
+                        { return NotFound(); }
+                        else
+                        { throw; }
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.AdminForum.Include(sp => sp.User).ToList()) });
             }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.IdUser);
-            return View(adminForumModel);
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", adminForumModel) });
         }
 
         // GET: Admin/AdminForum/Delete/5
