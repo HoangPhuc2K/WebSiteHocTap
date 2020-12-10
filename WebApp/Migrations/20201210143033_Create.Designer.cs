@@ -9,14 +9,14 @@ using WebApp.Areas.Admin.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DPContext))]
-    [Migration("20201201113853_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201210143033_Create")]
+    partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.9")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -28,6 +28,7 @@ namespace WebApp.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
@@ -36,6 +37,7 @@ namespace WebApp.Migrations
                         .HasMaxLength(300);
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
@@ -62,6 +64,7 @@ namespace WebApp.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
@@ -70,6 +73,7 @@ namespace WebApp.Migrations
                         .HasMaxLength(300);
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
@@ -95,24 +99,19 @@ namespace WebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AccountName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("AccountPassword")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(300)")
+                        .HasMaxLength(300);
 
                     b.Property<string>("Email")
+                        .HasColumnType("nvarchar(300)")
+                        .HasMaxLength(300);
+
+                    b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<int>("IdUser")
                         .HasColumnType("int");
@@ -248,49 +247,7 @@ namespace WebApp.Migrations
                     b.ToTable("Lesson");
                 });
 
-            modelBuilder.Entity("WebApp.Areas.Admin.Models.RolesModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("WebApp.Areas.Admin.Models.UserModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<string>("AccountPassword")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<int>("IdRoles")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdRoles");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("WebApp.Models.PostModel", b =>
+            modelBuilder.Entity("WebApp.Areas.Admin.Models.PostModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -320,7 +277,23 @@ namespace WebApp.Migrations
                     b.ToTable("Post");
                 });
 
-            modelBuilder.Entity("WebApp.Models.StudentModel", b =>
+            modelBuilder.Entity("WebApp.Areas.Admin.Models.RolesModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("WebApp.Areas.Admin.Models.StudentModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -328,6 +301,7 @@ namespace WebApp.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
@@ -336,6 +310,7 @@ namespace WebApp.Migrations
                         .HasMaxLength(300);
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
@@ -352,6 +327,32 @@ namespace WebApp.Migrations
                     b.HasIndex("IdUser");
 
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("WebApp.Areas.Admin.Models.UserModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<string>("AccountPassword")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<int>("IdRoles")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdRoles");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("WebApp.Areas.Admin.Models.AdminForumModel", b =>
@@ -392,7 +393,7 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Areas.Admin.Models.CommemtPostModel", b =>
                 {
-                    b.HasOne("WebApp.Models.PostModel", "Post")
+                    b.HasOne("WebApp.Areas.Admin.Models.PostModel", "Post")
                         .WithMany()
                         .HasForeignKey("IdPost")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -414,29 +415,29 @@ namespace WebApp.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApp.Areas.Admin.Models.UserModel", b =>
+            modelBuilder.Entity("WebApp.Areas.Admin.Models.PostModel", b =>
                 {
-                    b.HasOne("WebApp.Areas.Admin.Models.RolesModel", "Roles")
-                        .WithMany("User")
-                        .HasForeignKey("IdRoles")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("WebApp.Models.PostModel", b =>
-                {
-                    b.HasOne("WebApp.Models.StudentModel", "Student")
+                    b.HasOne("WebApp.Areas.Admin.Models.StudentModel", "Student")
                         .WithMany("Post")
                         .HasForeignKey("IdStudent")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebApp.Models.StudentModel", b =>
+            modelBuilder.Entity("WebApp.Areas.Admin.Models.StudentModel", b =>
                 {
                     b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApp.Areas.Admin.Models.UserModel", b =>
+                {
+                    b.HasOne("WebApp.Areas.Admin.Models.RolesModel", "Roles")
+                        .WithMany("User")
+                        .HasForeignKey("IdRoles")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

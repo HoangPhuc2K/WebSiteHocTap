@@ -235,7 +235,7 @@ namespace WebApp.Areas.Admin.Controllers
                 UserModel user = new UserModel();
                 user.AccountName = model.UserName;
                 user.AccountPassword = model.Password;
-                user.IdRoles = 2;
+                user.IdRoles = 1;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 var result = _context.User.Where(

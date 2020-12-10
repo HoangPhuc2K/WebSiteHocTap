@@ -191,7 +191,6 @@ D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebA
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminForum\Delete.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminForum\Details.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\AdminForum\Index.cshtml.g.cs
-D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Admin\Create.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Admin\Delete.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Admin\Details.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Admin\Edit.cshtml.g.cs
@@ -701,3 +700,6 @@ D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razo
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Details.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Edit.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Lesson\Index.cshtml.g.cs
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Admin\_ViewAll.cshtml.g.cs
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Admin\AddOrEdit.cshtml.g.cs

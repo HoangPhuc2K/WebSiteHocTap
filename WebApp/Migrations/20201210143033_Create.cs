@@ -2,7 +2,7 @@
 
 namespace WebApp.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -60,9 +60,9 @@ namespace WebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(maxLength: 50, nullable: true),
+                    FullName = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 300, nullable: true),
-                    Address = table.Column<string>(maxLength: 300, nullable: true),
+                    Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
                     IdUser = table.Column<int>(nullable: false)
                 },
@@ -83,9 +83,9 @@ namespace WebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(maxLength: 50, nullable: true),
+                    FullName = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 300, nullable: true),
-                    Address = table.Column<string>(maxLength: 300, nullable: true),
+                    Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
                     IdUser = table.Column<int>(nullable: false)
                 },
@@ -106,10 +106,9 @@ namespace WebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AccountName = table.Column<string>(maxLength: 200, nullable: false),
-                    AccountPassword = table.Column<string>(maxLength: 200, nullable: true),
-                    Email = table.Column<string>(maxLength: 200, nullable: false),
-                    Address = table.Column<string>(maxLength: 1000, nullable: false),
+                    FullName = table.Column<string>(maxLength: 50, nullable: false),
+                    Email = table.Column<string>(maxLength: 300, nullable: true),
+                    Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
                     IdUser = table.Column<int>(nullable: false)
                 },
@@ -130,9 +129,9 @@ namespace WebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FullName = table.Column<string>(maxLength: 50, nullable: true),
+                    FullName = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 300, nullable: true),
-                    Address = table.Column<string>(maxLength: 300, nullable: true),
+                    Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
                     IdUser = table.Column<int>(nullable: false)
                 },

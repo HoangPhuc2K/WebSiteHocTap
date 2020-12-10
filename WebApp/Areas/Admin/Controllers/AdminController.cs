@@ -49,10 +49,23 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Admin/Create
-        public IActionResult Create()
+        public async Task<IActionResult> AddOrEdit(int id = 0)
         {
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
-            return View();
+            if (id == 0)
+            {
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
+                return View(new AdminModel());
+            }
+            else
+            {
+                var adminModel = await _context.Admin.FindAsync(id);
+                if (adminModel == null)
+                {
+                    return NotFound();
+                }
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.Id);
+                return View(adminModel);
+            }
         }
 
         // POST: Admin/Admin/Create
@@ -60,70 +73,41 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Address,Phone,IdUser")] AdminModel adminModel)
+        public async Task<IActionResult> AddOrEdit(int id,[Bind("Id,FullName,Email,Address,Phone,IdUser")] AdminModel adminModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(adminModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.IdUser);
-            return View(adminModel);
-        }
-
-        // GET: Admin/Admin/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var adminModel = await _context.Admin.FindAsync(id);
-            if (adminModel == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.IdUser);
-            return View(adminModel);
-        }
-
-        // POST: Admin/Admin/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Address,Phone,IdUser")] AdminModel adminModel)
-        {
-            if (id != adminModel.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (id == 0)
                 {
-                    _context.Update(adminModel);
+                    _context.Add(adminModel);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!AdminModelExists(adminModel.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(adminModel);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!AdminModelExists(adminModel.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.IdUser);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Admin.ToList()) });
             }
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.IdUser);
-            return View(adminModel);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", adminModel)});
         }
+
 
         // GET: Admin/Admin/Delete/5
         public async Task<IActionResult> Delete(int? id)
