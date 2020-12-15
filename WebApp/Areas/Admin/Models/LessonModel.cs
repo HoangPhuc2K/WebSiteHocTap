@@ -47,6 +47,7 @@ namespace WebApp.Areas.Admin.Models
         public virtual CourseModel Course { get; set; }
         [ForeignKey("IdCoach")]
         public virtual CoachModel Coach { get; set; }
+        public ICollection<CommemtLessonModel> CommemtLessons { get; set; }
 
 
     }
