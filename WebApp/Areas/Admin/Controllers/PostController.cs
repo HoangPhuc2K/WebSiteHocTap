@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,6 @@ using WebApp.Areas.Admin.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class PostController : Controller
     {
@@ -22,14 +20,14 @@ namespace WebApp.Areas.Admin.Controllers
             _context = context;
         }
 
-        // GET: Admin_WebSite/Post
+        // GET: Admin/Post
         public async Task<IActionResult> Index()
         {
             var dPContext = _context.Post.Include(p => p.Student);
             return View(await dPContext.ToListAsync());
         }
 
-        // GET: Admin_WebSite/Post/Details/5
+        // GET: Admin/Post/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,14 +46,14 @@ namespace WebApp.Areas.Admin.Controllers
             return View(postModel);
         }
 
-        // GET: Admin_WebSite/Post/Create
+        // GET: Admin/Post/Create
         public IActionResult Create()
         {
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Phone");
+            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address");
             return View();
         }
 
-        // POST: Admin_WebSite/Post/Create
+        // POST: Admin/Post/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -68,11 +66,11 @@ namespace WebApp.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Phone", postModel.IdStudent);
+            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address", postModel.IdStudent);
             return View(postModel);
         }
 
-        // GET: Admin_WebSite/Post/Edit/5
+        // GET: Admin/Post/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,11 +83,11 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Phone", postModel.IdStudent);
+            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address", postModel.IdStudent);
             return View(postModel);
         }
 
-        // POST: Admin_WebSite/Post/Edit/5
+        // POST: Admin/Post/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -121,11 +119,11 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Phone", postModel.IdStudent);
+            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address", postModel.IdStudent);
             return View(postModel);
         }
 
-        // GET: Admin_WebSite/Post/Delete/5
+        // GET: Admin/Post/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,7 +142,7 @@ namespace WebApp.Areas.Admin.Controllers
             return View(postModel);
         }
 
-        // POST: Admin_WebSite/Post/Delete/5
+        // POST: Admin/Post/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
