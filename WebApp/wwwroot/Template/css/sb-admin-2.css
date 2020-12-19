@@ -1523,10 +1523,12 @@ pre code {
   vertical-align: top;
   border-top: 1px solid #e3e6f0;
 }
-
+#content-nva{
+    width:100%;
+}
 .table thead th {
-  vertical-align: bottom;
-  border-bottom: 2px solid #e3e6f0;
+    vertical-align: bottom;
+    border-bottom: 2px solid #e3e6f0;
 }
 
 .table tbody + tbody {
@@ -9726,13 +9728,13 @@ a:focus {
 
 #wrapper #content-wrapper {
   background-color: #f8f9fc;
-  width: 100%;
-  overflow-x: hidden;
+  width:100%;
+  overflow-x:auto;
 }
 
-#wrapper #content-wrapper #content {
-  flex: 1 0 auto;
-}
+    #wrapper #content-wrapper #content {
+        flex: 1 0 auto;
+    }
 
 .container, .container-fluid, .container-sm, .container-md, .container-lg, .container-xl {
   padding-left: 1.5rem;

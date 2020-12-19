@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Admin.Data;
 using WebApp.Areas.Admin.Models;
+using static WebApp.Helper;
 
 namespace WebApp.Areas.Admin.Controllers
 {
@@ -49,6 +50,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Admin/Create
+        [NoDirectAccess]
         public async Task<IActionResult> AddOrEdit(int id = 0)
         {
             if (id == 0)

@@ -55,16 +55,9 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="~/Template/vendor/jquery/jquery.min.js"></script>
-    <script src="~/Template/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <partial name="_PartialJS" />
 
-    <!-- Core plugin JavaScript-->
-    <script src="~/Template/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Custom scripts for all pages-->
-    <script src="~/Template/js/sb-admin-2.min.js"></script>
-    <script src="~/js/Ajax.js"></script>
-
-    @RenderSection("Script", required: false);
+    @RenderSection("Scripts", required: false)
+    @RenderSection("JS", required: false)
 </body>
 </html>

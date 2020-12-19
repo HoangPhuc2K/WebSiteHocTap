@@ -30,6 +30,7 @@ namespace WebApp.Areas.Admin.Models
         [ForeignKey("IdStudent")]
 
         public virtual StudentModel Student { get; set; }
+        public ICollection<CommemtPostModel> CommemtPosts { get; set; }
 
     }
 }

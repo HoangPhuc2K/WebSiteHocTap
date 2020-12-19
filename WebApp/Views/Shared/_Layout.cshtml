@@ -2,6 +2,7 @@
 <html lang="vi">
 <head>
     @await Html.PartialAsync("_HeadPartial.cshtml")
+    @RenderSection("CSS",false)
 </head>
 <body id="page-top">
     <div id="wrapper" class="con">
@@ -51,5 +52,6 @@
     <!-- Custom scripts for all pages-->
     <script src="~/Template/js/sb-admin-2.min.js"></script>
     @RenderSection("Script", required: false)
+    @RenderSection("JS", required: false)
 </body>
 </html>

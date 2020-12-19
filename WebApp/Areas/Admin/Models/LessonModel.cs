@@ -13,7 +13,7 @@ namespace WebApp.Areas.Admin.Models
         public int Id { set; get; }
 
         [Required(ErrorMessage = "Nhập tên bài giảng")]
-        [StringLength(maximumLength: 300, ErrorMessage = "Độ Dài đã quá 300 Ký Tự", MinimumLength = 30)]
+        [StringLength(maximumLength: 300, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 30)]
         [Display(Name = "Lesson Name")]
         public string LessonName { get; set; }
 
@@ -47,6 +47,7 @@ namespace WebApp.Areas.Admin.Models
         public virtual CourseModel Course { get; set; }
         [ForeignKey("IdCoach")]
         public virtual CoachModel Coach { get; set; }
+        public ICollection<CommemtLessonModel> CommemtLessons { get; set; }
 
 
     }

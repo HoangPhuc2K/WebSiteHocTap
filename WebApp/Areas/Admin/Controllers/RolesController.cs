@@ -48,7 +48,7 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // Admin/Roles/AddOrEdit
-        // GET: Transaction/AddOrEdit/5(Update)
+        // GET: Roles/AddOrEdit/5(Update)
         [NoDirectAccess]
         public async Task<IActionResult> AddOrEdit(int id = 0)
         {
