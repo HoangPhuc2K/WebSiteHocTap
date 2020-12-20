@@ -13,12 +13,12 @@ namespace WebApp.Areas.Admin.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Nhập Đầy Đủ Thông Tin")]
-        [StringLength(maximumLength: 200, ErrorMessage = "Độ Dài Phải Không Quá 200 Ký Tự", MinimumLength = 16)]
+        [StringLength(200, MinimumLength = 16, ErrorMessage = "Độ Dài Phải Từ {2} Đến {1} Kí Tự" )]
         [Display(Name = "Tựa Đề")]
         public string Title { get; set; }
 
         [Required]
-        [StringLength(maximumLength: 300, ErrorMessage = "Độ Dài Phải Không Quá 300 Ký Tự", MinimumLength = 16)]
+        [StringLength(300, ErrorMessage = "Độ Dài Phải Không Quá {1} Ký Tự")]
         [Display(Name = "Mô Tả")]
         public string Descripsion { get; set; }
 
