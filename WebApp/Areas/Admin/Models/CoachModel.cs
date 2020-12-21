@@ -31,6 +31,7 @@ namespace WebApp.Areas.Admin.Models
         [DataType(DataType.PhoneNumber)]
         [StringLength(maximumLength: 10, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 10)]
         public string Phone { get; set; }
+
         public int IdUser { get; set; }
         [ForeignKey("IdUser")]
         public virtual UserModel User { get; set; }

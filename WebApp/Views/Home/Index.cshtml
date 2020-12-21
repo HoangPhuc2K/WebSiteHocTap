@@ -1,5 +1,27 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    string url = null;
+    string img = null;
+    if (Context.User.IsInRole("Admin"))
+    {
+        img = Context.User.Claims.ToList()[3].Value;
+        url = Url.Action("Profile", "Admin", new { Area = "Admin",id = Context.User.Claims.ToList()[2].Value });
+    }
+    if (Context.User.IsInRole("AdminForum"))
+    {
+        img = Context.User.Claims.ToList()[3].Value;
+        url = Url.Action("Profile", "AdminForum",new { Area = "Admin" , id = Context.User.Claims.ToList()[2].Value });
+    }
+    if (Context.User.IsInRole("Coach"))
+    {
+        img = Context.User.Claims.ToList()[3].Value;
+        url = Url.Action("Profile", "Coach", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
+    }
+    if (Context.User.IsInRole("Student"))
+    {
+        img = Context.User.Claims.ToList()[3].Value;
+        url = Url.Action("Profile", "Student", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
+    }
     Layout = null;
 }
 <!DOCTYPE html>
@@ -80,19 +102,22 @@
                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="mr-2 d-none d-lg-inline text-white small">@Context.User.Identity.Name</span>
                                         <img class="img-profile rounded-circle"
-                                             src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                                             src="~/Img/User/@img">
                                     </a>
                                     <!-- Dropdown - User Information -->
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                          aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="#">
+                                        <a class="dropdown-item" href="@url">
                                             <i class="fa fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Trang cá nhân
                                         </a>
-                                        <a class="dropdown-item" href="#">
-                                            <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Cài đặt
-                                        </a>
+                                        @if (Context.User.IsInRole("Admin"))
+                                        {
+                                            <a class="dropdown-item" asp-area="Admin" asp-controller="Home2" asp-action="Index">
+                                                <i class="fa fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                                Quản Lí
+                                            </a>
+                                        }
                                         <a class="dropdown-item" href="#">
                                             <i class="fa fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Hoạt động gần đây

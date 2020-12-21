@@ -49,7 +49,8 @@ namespace WebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("IdUser")
+                        .IsUnique();
 
                     b.ToTable("AdminForum");
                 });
@@ -85,7 +86,8 @@ namespace WebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("IdUser")
+                        .IsUnique();
 
                     b.ToTable("Admin");
                 });
@@ -121,7 +123,8 @@ namespace WebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("IdUser")
+                        .IsUnique();
 
                     b.ToTable("Coach");
                 });
@@ -322,7 +325,8 @@ namespace WebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdUser");
+                    b.HasIndex("IdUser")
+                        .IsUnique();
 
                     b.ToTable("Student");
                 });
@@ -346,6 +350,9 @@ namespace WebApp.Migrations
                     b.Property<int>("IdRoles")
                         .HasColumnType("int");
 
+                    b.Property<string>("Img")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdRoles");
@@ -356,8 +363,8 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Areas.Admin.Models.AdminForumModel", b =>
                 {
                     b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("IdUser")
+                        .WithOne("AdminForum")
+                        .HasForeignKey("WebApp.Areas.Admin.Models.AdminForumModel", "IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -365,8 +372,8 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Areas.Admin.Models.AdminModel", b =>
                 {
                     b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("IdUser")
+                        .WithOne("AdminModel")
+                        .HasForeignKey("WebApp.Areas.Admin.Models.AdminModel", "IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -374,8 +381,8 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Areas.Admin.Models.CoachModel", b =>
                 {
                     b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("IdUser")
+                        .WithOne("Coach")
+                        .HasForeignKey("WebApp.Areas.Admin.Models.CoachModel", "IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -383,7 +390,7 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Areas.Admin.Models.CommemtLessonModel", b =>
                 {
                     b.HasOne("WebApp.Areas.Admin.Models.LessonModel", "Lesson")
-                        .WithMany()
+                        .WithMany("CommemtLessons")
                         .HasForeignKey("IdLesson")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -392,7 +399,7 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Areas.Admin.Models.CommemtPostModel", b =>
                 {
                     b.HasOne("WebApp.Areas.Admin.Models.PostModel", "Post")
-                        .WithMany()
+                        .WithMany("CommemtPosts")
                         .HasForeignKey("IdPost")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -425,8 +432,8 @@ namespace WebApp.Migrations
             modelBuilder.Entity("WebApp.Areas.Admin.Models.StudentModel", b =>
                 {
                     b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("IdUser")
+                        .WithOne("StudentModel")
+                        .HasForeignKey("WebApp.Areas.Admin.Models.StudentModel", "IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

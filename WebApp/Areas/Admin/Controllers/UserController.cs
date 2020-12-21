@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -65,11 +67,19 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,IdRoles")] UserModel userModel)
+        public async Task<IActionResult> Create([Bind("Id,AccountName,AccountPassword,Img,IdRoles")] UserModel userModel,IFormFile ful)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(userModel);
+                await _context.SaveChangesAsync();
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User",
+                    userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1]);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await ful.CopyToAsync(stream);
+                }
+                userModel.Img = userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1];
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -101,7 +111,7 @@ namespace WebApp.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AccountName,AccountPassword,ConfirmPassword,IdRoles")] UserModel userModel)
+        public async Task<IActionResult> Edit(int id,[Bind("Id,AccountName,AccountPassword,Img,IdRoles")] UserModel userModel, IFormFile ful)
         {
             if (id != userModel.Id)
             {
@@ -112,7 +122,24 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 try
                 {
-                    _context.Update(userModel);
+                    if (ful != null)
+                    {
+
+                        string path = null;
+                        if (userModel.Img != null || userModel.Img == "NoImg.jpg")
+                        {
+                            path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User", userModel.Img);
+                            System.IO.File.Delete(path);
+                        }
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User",
+                        userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1]);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await ful.CopyToAsync(stream);
+                        }
+                        userModel.Img = userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1];
+                        _context.Update(userModel);
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -179,16 +206,22 @@ namespace WebApp.Areas.Admin.Controllers
             var result = _context.User.Where(
                     s => s.AccountName == model.UserName && s.AccountPassword == model.Password
                 ).FirstOrDefault();
-            var Roles = _context.Roles.Find(result.IdRoles);
             if (result == null)
             {
                 return View();
+            }
+            var Roles = _context.Roles.Find(result.IdRoles);
+            if(Roles == null)
+            {
+                return NotFound();
             }
             // create claims
             List<Claim> claims = new List<Claim>
             {
                     new Claim(ClaimTypes.Name, result.AccountName),
                     new Claim(ClaimTypes.Role, Roles.Name),
+                    new Claim("id", Roles.Id.ToString()),
+                    new Claim("img",result.Img),
             };
 
             // create identity
@@ -235,6 +268,7 @@ namespace WebApp.Areas.Admin.Controllers
                 UserModel user = new UserModel();
                 user.AccountName = model.UserName;
                 user.AccountPassword = model.Password;
+                user.Img = "NoImg.jpg";
                 user.IdRoles = 1;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
@@ -251,6 +285,7 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     new Claim(ClaimTypes.Name, result.AccountName),
                     new Claim(ClaimTypes.Role, Roles.Name),
+                    new Claim("id", Roles.Id.ToString()),
                 };
 
                 // create identity

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -103,6 +105,7 @@ namespace WebApp.Areas.Admin.Controllers
                         { throw; }
                     }
                 }
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.AdminForum.Include(sp => sp.User).ToList()) });
             }
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
@@ -137,6 +140,76 @@ namespace WebApp.Areas.Admin.Controllers
             _context.AdminForum.Remove(adminForumModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        //Get:Admin/AdminForum/Profile/id
+        public async Task<IActionResult> Profile(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var adminForumModel = await _context.Admin.FindAsync(id);
+            if (adminForumModel == null)
+            {
+                return NotFound();
+            }
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
+            ViewData["Img"] = _context.User.Find(adminForumModel.IdUser).Img;
+            return View(adminForumModel);
+        }
+
+        //Post:Admin/AdminForum/Profile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Profile(int id, [Bind("Id,FullName,Email,Address,Phone,IdUser")] AdminForumModel adminForumModel, IFormFile ful)
+        {
+            if (id != adminForumModel.Id)
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(adminForumModel);
+                    var admin = await _context.Admin.FindAsync(id);
+                    if (ful != null)
+                    {
+                        var userModel = await _context.User.FindAsync(admin.IdUser);
+                        string path = null;
+                        if (userModel.Img != null || userModel.Img == "NoImg.jpg")
+                        {
+                            path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User", userModel.Img);
+                            System.IO.File.Delete(path);
+                        }
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User",
+                        userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1]);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await ful.CopyToAsync(stream);
+                        }
+                        userModel.Img = userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1];
+                        _context.Update(userModel);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (AdminForumModelExists(adminForumModel.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Profile", id);
+            }
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
+            ViewData["Img"] = _context.User.Find(adminForumModel.IdUser).Img;
+            return View(adminForumModel);
         }
 
         private bool AdminForumModelExists(int id)

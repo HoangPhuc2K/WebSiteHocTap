@@ -84,3 +84,6 @@ body {
 .img-top {
     background-image: url("../lib/Photo/images.jfif");
 }
+.table tbody td img{
+    width:50%;
+}

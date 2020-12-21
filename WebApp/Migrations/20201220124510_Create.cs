@@ -41,6 +41,7 @@ namespace WebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AccountName = table.Column<string>(maxLength: 200, nullable: false),
                     AccountPassword = table.Column<string>(maxLength: 200, nullable: true),
+                    Img = table.Column<string>(nullable: true),
                     IdRoles = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -244,17 +245,20 @@ namespace WebApp.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Admin_IdUser",
                 table: "Admin",
-                column: "IdUser");
+                column: "IdUser",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AdminForum_IdUser",
                 table: "AdminForum",
-                column: "IdUser");
+                column: "IdUser",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Coach_IdUser",
                 table: "Coach",
-                column: "IdUser");
+                column: "IdUser",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CommemtLesson_IdLesson",
@@ -284,7 +288,8 @@ namespace WebApp.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Student_IdUser",
                 table: "Student",
-                column: "IdUser");
+                column: "IdUser",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_IdRoles",

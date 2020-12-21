@@ -11,7 +11,6 @@ using WebApp.Areas.Admin.Models;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class StudentController : Controller
     {

@@ -2,6 +2,8 @@
 <html lang="vi">
 <head>
     @await Html.PartialAsync("_HeadPartial.cshtml")
+    <partial name="_PartialCSS" />
+    @RenderSection("CSS",false)
 </head>
 <body id="page-top">
     <div id="wrapper">

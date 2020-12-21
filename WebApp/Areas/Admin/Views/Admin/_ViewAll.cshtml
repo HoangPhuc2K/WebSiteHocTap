@@ -54,7 +54,7 @@
                 <a class="btn btn-warning" onclick="showInPopup('@Url.Action("AddOrEdit","Admin",new {id=item.Id },Context.Request.Scheme)','Thêm mới Admin')">Chỉnh Sửa</a>
             </td>
             <td>
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-info" asp-action="Profile" asp-route-id="@item.Id">Details</a>
             </td>
             <td>
                 <form asp-action="Delete" asp-route-id="@item.Id" onsubmit="jQueryAjaxDelete(this)" class="d-inline">

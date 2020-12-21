@@ -23,12 +23,14 @@ namespace WebApp.Areas.Admin.Models
         [Display(Name = "Acount Password")]
         public string AccountPassword { get; set; }
 
+        public string Img { get; set; }
+
         public int IdRoles { get; set; }
         [ForeignKey("IdRoles")]
         public virtual RolesModel Roles { get; set; }
-        ICollection<AdminModel> AdminModel { get; set; }
-        ICollection<AdminForumModel> AdminForum { get; set; }
-        ICollection<StudentModel> StudentModel { get; set; }
-        ICollection<CoachModel> Coach { get; set; }
+        public virtual AdminModel AdminModel { get; set; }
+        public virtual AdminForumModel AdminForum { get; set; }
+        public virtual StudentModel StudentModel { get; set; }
+        public virtual CoachModel Coach { get; set; }
     }
 }
