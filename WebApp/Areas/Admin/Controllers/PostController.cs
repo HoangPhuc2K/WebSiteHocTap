@@ -47,10 +47,23 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Post/Create
-        public IActionResult Create()
+        public async Task<IActionResult> AddOrEdit(int id = 0)
         {
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address");
-            return View();
+            if (id == 0)
+            {
+                ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName");
+                return View(new PostModel());
+            }
+            else
+            {
+                var postModel = await _context.Post.FindAsync(id);
+                if (postModel == null)
+                {
+                    return NotFound();
+                }
+                ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName", postModel.Id);
+                return View(postModel);
+            }
         }
 
         // POST: Admin/Post/Create
@@ -58,16 +71,39 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Descripsion,Content,IdStudent")] PostModel postModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Descripsion,Content,IdStudent")] PostModel postModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(postModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (id == 0)
+                {
+                    _context.Add(postModel);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    try
+                    {
+                        _context.Update(postModel);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!PostModelExists(postModel.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+                ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName", postModel.Id);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Post.ToList()) });
             }
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address", postModel.IdStudent);
-            return View(postModel);
+            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName", postModel.Id);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", postModel) });
         }
 
         // GET: Admin/Post/Edit/5

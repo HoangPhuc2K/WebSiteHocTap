@@ -48,10 +48,23 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin_WebSite/Student/Create
-        public IActionResult Create()
+        public async Task<IActionResult> AddOrEdit(int id = 0)
         {
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
-            return View();
+            if (id == 0)
+            {
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
+                return View(new StudentModel());
+            }
+            else
+            {
+                var studentModel = await _context.Student.FindAsync(id);
+                if (studentModel == null)
+                {
+                    return NotFound();
+                }
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", studentModel.Id);
+                return View(studentModel);
+            }
         }
 
         // POST: Admin_WebSite/Student/Create
@@ -59,71 +72,42 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Address,Phone,IdUser")] StudentModel studentModel)
+        public async Task<IActionResult> AddOrEdit(int id,[Bind("Id,FullName,Email,Address,Phone,IdUser")] StudentModel studentModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(studentModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", studentModel.IdUser);
-            return View(studentModel);
-        }
-
-        // GET: Admin_WebSite/Student/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var studentModel = await _context.Student.FindAsync(id);
-            if (studentModel == null)
-            {
-                return NotFound();
-            }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", studentModel.IdUser);
-            return View(studentModel);
-        }
-
-        // POST: Admin_WebSite/Student/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Email,Address,Phone,IdUser")] StudentModel studentModel)
-        {
-            if (id != studentModel.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (id == 0)
                 {
-                    _context.Update(studentModel);
+                    _context.Add(studentModel);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                    if (!StudentModelExists(studentModel.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(studentModel);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!StudentModelExists(studentModel.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", studentModel.IdUser);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Student.ToList()) });
             }
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", studentModel.IdUser);
-            return View(studentModel);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", studentModel) });
         }
 
+     
         // GET: Admin_WebSite/Student/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
