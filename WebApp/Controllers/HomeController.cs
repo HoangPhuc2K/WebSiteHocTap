@@ -30,6 +30,10 @@ namespace WebApp.Controllers
         {
             return View();
         }
+        public IActionResult DetailLesson()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

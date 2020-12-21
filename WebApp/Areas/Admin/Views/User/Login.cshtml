@@ -17,6 +17,12 @@
             <form asp-action="Login">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="RequestPath" value="@ViewBag.RequestPath" />
+                <div class="form-group">
+                    @if (ViewData["LoginError"] != null)
+                    {
+                        <span class="text-danger">@ViewData["LoginError"]</span>
+                    }
+                </div>
                 <div class="input-group form-group">
                     <div class="input-group-prepend ">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>

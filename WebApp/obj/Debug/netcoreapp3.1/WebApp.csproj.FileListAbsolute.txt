@@ -247,3 +247,5 @@ D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\stat
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\DetailLesson.cshtml.g.cs

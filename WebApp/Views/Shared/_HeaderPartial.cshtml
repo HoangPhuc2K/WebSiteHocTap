@@ -1,27 +1,30 @@
 ﻿@{
-    string url = null;
-    string img = null;
-    if (Context.User.IsInRole("Admin"))
+    string url = "";
+    string img = "";
+    if (Context.User.Identity.IsAuthenticated)
     {
-        img = Context.User.Claims.ToList()[3].Value;
-        url = Url.Action("Profile", "Admin", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
+        if (Context.User.IsInRole("Admin"))
+        {
+            img = Context.User.Claims.ToList()[3].Value;
+            url = Url.Action("Profile", "Admin", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
+        }
+        if (Context.User.IsInRole("AdminForum"))
+        {
+            img = Context.User.Claims.ToList()[3].Value;
+            url = Url.Action("Profile", "AdminForum", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
+        }
+        if (Context.User.IsInRole("Coach"))
+        {
+            img = Context.User.Claims.ToList()[3].Value;
+            url = Url.Action("Profile", "Coach", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
+        }
+        if (Context.User.IsInRole("Student"))
+        {
+            img = Context.User.Claims.ToList()[3].Value;
+            url = Url.Action("Profile", "Student", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
+        }
     }
-    if (Context.User.IsInRole("AdminForum"))
-    {
-        img = Context.User.Claims.ToList()[3].Value;
-        url = Url.Action("Profile", "AdminForum", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
-    }
-    if (Context.User.IsInRole("Coach"))
-    {
-        img = Context.User.Claims.ToList()[3].Value;
-        url = Url.Action("Profile", "Coach", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
-    }
-    if (Context.User.IsInRole("Student"))
-    {
-        img = Context.User.Claims.ToList()[3].Value;
-        url = Url.Action("Profile", "Student", new { Area = "Admin", id = Context.User.Claims.ToList()[2].Value });
-    }
- }
+}
     <div id="content" class="head-nav">
 
         <!-- Topbar -->

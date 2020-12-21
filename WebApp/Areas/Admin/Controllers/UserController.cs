@@ -208,6 +208,7 @@ namespace WebApp.Areas.Admin.Controllers
                 ).FirstOrDefault();
             if (result == null)
             {
+                ViewData["LoginError"] = "Tài khoản hoặc mật khẩu không đúng";
                 return View();
             }
             var Roles = _context.Roles.Find(result.IdRoles);
@@ -286,6 +287,7 @@ namespace WebApp.Areas.Admin.Controllers
                     new Claim(ClaimTypes.Name, result.AccountName),
                     new Claim(ClaimTypes.Role, Roles.Name),
                     new Claim("id", Roles.Id.ToString()),
+                    new Claim("img",result.Img),
                 };
 
                 // create identity
