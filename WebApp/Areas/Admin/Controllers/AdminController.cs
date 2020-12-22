@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -149,13 +150,13 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var adminModel = await _context.Admin.FindAsync(id);
+            var adminModel = await _context.Admin.Where(sp => sp.IdUser == id).FirstOrDefaultAsync();
             if(adminModel == null)
             {
                 return NotFound();
             }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.Id);
-            ViewData["Img"] = _context.User.Find(adminModel.IdUser).Img;
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", id);
+            ViewData["Img"] = _context.User.Find(id).Img;
             return View(adminModel);
         }
 
@@ -178,13 +179,14 @@ namespace WebApp.Areas.Admin.Controllers
                     {
                         var userModel = await _context.User.FindAsync(admin.IdUser);
                         string path = null;
-                        if (userModel.Img != null || userModel.Img == "NoImg.jpg")
+                        if ( userModel.Img != "NoImg.jpg")
                         {
                             path= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User", userModel.Img);
                             System.IO.File.Delete(path);
                         }
                         path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User",
                         userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1]);
+                        HttpContext.User.Claims.ToList()[0] = new Claim("img", userModel.Img);
                         using (var stream = new FileStream(path, FileMode.Create))
                         {
                             await ful.CopyToAsync(stream);

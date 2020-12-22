@@ -205,7 +205,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             var result = _context.User.Where(
                     s => s.AccountName == model.UserName && s.AccountPassword == model.Password
-                ).FirstOrDefault();
+                ).FirstOrDefault(); 
             if (result == null)
             {
                 ViewData["LoginError"] = "Tài khoản hoặc mật khẩu không đúng";
@@ -221,7 +221,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                     new Claim(ClaimTypes.Name, result.AccountName),
                     new Claim(ClaimTypes.Role, Roles.Name),
-                    new Claim("id", Roles.Id.ToString()),
+                    new Claim("id", result.Id.ToString()),
                     new Claim("img",result.Img),
             };
 
@@ -286,7 +286,7 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     new Claim(ClaimTypes.Name, result.AccountName),
                     new Claim(ClaimTypes.Role, Roles.Name),
-                    new Claim("id", Roles.Id.ToString()),
+                    new Claim("id", result.Id.ToString()),
                     new Claim("img",result.Img),
                 };
 
