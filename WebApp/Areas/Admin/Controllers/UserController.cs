@@ -126,7 +126,7 @@ namespace WebApp.Areas.Admin.Controllers
                     {
 
                         string path = null;
-                        if (userModel.Img != null || userModel.Img == "NoImg.jpg")
+                        if (userModel.Img != "NoImg.jpg")
                         {
                             path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Img/User", userModel.Img);
                             System.IO.File.Delete(path);
@@ -140,6 +140,7 @@ namespace WebApp.Areas.Admin.Controllers
                         userModel.Img = userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1];
                         _context.Update(userModel);
                     }
+                    _context.Update(userModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

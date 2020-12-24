@@ -50,12 +50,13 @@ namespace WebApp.Areas.Admin.Controllers
         // Admin/Roles/AddOrEdit
         // GET: Roles/AddOrEdit/5(Update)
         [NoDirectAccess]
-        public async Task<IActionResult> AddOrEdit(int id = 0)
+        public async Task<IActionResult> AddOrEdit(int id = 0)//Admin/Roles/AddOrEdit/0
         {
-            if (id == 0)
+            if (id == 0)//insert
                 return View(new RolesModel());
             else
             {
+                //edit
                 var rolesModel = await _context.Roles.FindAsync(id);
                 if (rolesModel == null)
                 {
