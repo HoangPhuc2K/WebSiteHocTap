@@ -28,7 +28,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/AdminForum
         public async Task<IActionResult> Index()
         {
-            var dPContext = _context.AdminForum.Include(a => a.User);
+            var dPContext = _context.AdminForum.Where(sp => sp.Status == true).Include(a => a.User);
             return View(await dPContext.ToListAsync());
         }
 
@@ -106,7 +106,7 @@ namespace WebApp.Areas.Admin.Controllers
                     }
                 }
                 ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.AdminForum.Include(sp => sp.User).ToList()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.AdminForum.Where(sp => sp.Status == true).Include(sp => sp.User).ToList()) });
             }
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", adminForumModel) });
@@ -139,7 +139,7 @@ namespace WebApp.Areas.Admin.Controllers
             var adminForumModel = await _context.AdminForum.FindAsync(id);
             _context.AdminForum.Remove(adminForumModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.AdminForum.Where(sp => sp.Status == true).ToList()) });
         }
 
         //Get:Admin/AdminForum/Profile/id

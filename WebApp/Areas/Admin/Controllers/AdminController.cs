@@ -29,7 +29,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/Admin
         public async Task<IActionResult> Index()
         {
-            var dPContext = _context.Admin.Include(a => a.User);
+            var dPContext = _context.Admin.Where(sp => sp.Status == true).Include(a => a.User);
             return View(await dPContext.ToListAsync());
         }
 
@@ -106,7 +106,7 @@ namespace WebApp.Areas.Admin.Controllers
                         }
                     }
                 }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Admin.ToList()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Admin.Where(sp => sp.Status == true).ToList()) });
             }
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.IdUser);
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", adminModel)});
@@ -140,7 +140,7 @@ namespace WebApp.Areas.Admin.Controllers
             var adminModel = await _context.Admin.FindAsync(id);
             _context.Admin.Remove(adminModel);
             await _context.SaveChangesAsync();
-            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Admin.ToList()) });
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Admin.Where(sp => sp.Status == true).ToList()) });
         }
 
         //Get:Admin/Admin/Profile/id

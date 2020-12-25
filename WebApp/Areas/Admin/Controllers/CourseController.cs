@@ -57,7 +57,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description")] CourseModel courseModel)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Lang")] CourseModel courseModel)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] CourseModel courseModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Lang")] CourseModel courseModel)
         {
             if (id != courseModel.Id)
             {

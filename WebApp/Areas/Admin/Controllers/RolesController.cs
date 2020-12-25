@@ -26,7 +26,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/Roles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Roles.ToListAsync());
+            return View(await _context.Roles.Where(sp => sp.Status == true).ToListAsync());
         }
 
         // GET: Admin/Roles/Details/5
@@ -98,7 +98,7 @@ namespace WebApp.Areas.Admin.Controllers
                         { throw; }
                     }
                 }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Roles.ToList()) });
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Roles.Where(sp => sp.Status == true).ToList()) });
             }
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", rolesModel) });
         }
@@ -129,7 +129,7 @@ namespace WebApp.Areas.Admin.Controllers
             var rolesModel = await _context.Roles.FindAsync(id);
             _context.Roles.Remove(rolesModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Roles.Where(sp => sp.Status == true).ToList()) });
         }
 
         private bool RolesModelExists(int id)

@@ -205,7 +205,7 @@ namespace WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             var result = _context.User.Where(
-                    s => s.AccountName == model.UserName && s.AccountPassword == model.Password
+                    s => s.AccountName == model.UserName && s.AccountPassword == model.Password && s.Status == true
                 ).FirstOrDefault(); 
             if (result == null)
             {

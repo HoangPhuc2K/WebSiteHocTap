@@ -204,10 +204,10 @@ a {
             <div class="card-grid-space w-50">
                 <a class="card w-75 h-75" href="https://codetheweb.blog/2017/10/06/html-syntax/" style="--bg-img: url(https://images1-focus-opensocial.googleusercontent.com/gadgets/proxy?container=focus&resize_w=1500&url=https://codetheweb.blog/assets/img/posts/html-syntax/cover.jpg)">
                     <div>
-                        <h1>@item.Title</h1>
-                        <p>@item.Description</p>
+                        <h1>@Html.DisplayFor(modelItem => item.Title)</h1>
+                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
                         <div class="tags">
-                            <div class="tag">HTML</div>
+                            <div class="tag">@Html.DisplayFor(modelItem => item.Lang)</div>
                         </div>
                     </div>
                 </a>
