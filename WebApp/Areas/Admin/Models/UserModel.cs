@@ -32,5 +32,10 @@ namespace WebApp.Areas.Admin.Models
         public virtual AdminForumModel AdminForum { get; set; }
         public virtual StudentModel StudentModel { get; set; }
         public virtual CoachModel Coach { get; set; }
+        public bool Status { get; set; }
+        public UserModel()
+        {
+            Status = true;
+        }
     }
 }

@@ -15,6 +15,11 @@ namespace WebApp.Areas.Admin.Models
         [Display(Name = "Name Roles")]
         public string Name { get; set; }
         public ICollection<UserModel> User { get; set;}
+        public bool Status { get; set; }
 
+        public RolesModel()
+        {
+            Status = true;
+        }
     }
 }

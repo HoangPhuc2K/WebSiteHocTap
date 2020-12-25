@@ -17,5 +17,6 @@ namespace WebApp.Areas.Admin.Models
 
         public bool Remember { get; set; }
         public string RequestPath { get; set; }
+
     }
 }

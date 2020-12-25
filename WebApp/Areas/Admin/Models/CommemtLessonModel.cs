@@ -22,6 +22,12 @@ namespace WebApp.Areas.Admin.Models
         public int IdLesson { get; set; }
         [ForeignKey("IdLesson")]
         public virtual LessonModel Lesson { get; set; }
+        public bool Status { get; set; }
+
+        public CommemtLessonModel()
+        {
+            Status = true;
+        }
 
     }
 }

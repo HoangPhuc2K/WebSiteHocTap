@@ -5,18 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WebApp.Areas.Admin.Data;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly DPContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(DPContext context)
         {
-            _logger = logger;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -26,13 +28,22 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        public IActionResult IndexCourse()
+        public async Task<IActionResult> IndexCourse()
         {
-            return View();
+            return View(await _context.Course.ToListAsync());
         }
-        public IActionResult DetailLesson()
+        public async Task<IActionResult> DetailLesson(int? id)
         {
-            return View();
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var lessonModel = await _context.Lesson.FindAsync(id);
+            if(lessonModel == null)
+            {
+                return NotFound();
+            }
+            return View(lessonModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

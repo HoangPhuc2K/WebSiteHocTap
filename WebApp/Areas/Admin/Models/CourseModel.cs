@@ -19,9 +19,22 @@ namespace WebApp.Areas.Admin.Models
         [Required]
         [Display(Name = "Description")]
         [StringLength(maximumLength: 300, ErrorMessage = "Độ dài không phù hợp")]
+
         public string Description { get; set; }
 
+        [Display(Name = "Language")]
+        [StringLength(maximumLength: 300, ErrorMessage = "Độ dài không phù hợp")]
+        [Required]
+
+        public string Lang { get; set; }
+
         public ICollection<LessonModel> Lesson { get; set; }
+        public bool Status { get; set; }
+
+        public CourseModel()
+        {
+            Status = true;
+        }
 
     }
 }

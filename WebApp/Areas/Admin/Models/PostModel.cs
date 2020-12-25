@@ -32,5 +32,11 @@ namespace WebApp.Areas.Admin.Models
         public virtual StudentModel Student { get; set; }
         public ICollection<CommemtPostModel> CommemtPosts { get; set; }
 
+        public bool Status { get; set; }
+
+        public PostModel()
+        {
+            Status = true;
+        }
     }
 }

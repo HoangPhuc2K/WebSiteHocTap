@@ -13,7 +13,9 @@ namespace WebApp.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(maxLength: 200, nullable: false),
-                    Description = table.Column<string>(maxLength: 300, nullable: false)
+                    Description = table.Column<string>(maxLength: 300, nullable: false),
+                    Lang = table.Column<string>(maxLength: 300, nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,7 +28,8 @@ namespace WebApp.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -42,7 +45,8 @@ namespace WebApp.Migrations
                     AccountName = table.Column<string>(maxLength: 200, nullable: false),
                     AccountPassword = table.Column<string>(maxLength: 200, nullable: true),
                     Img = table.Column<string>(nullable: true),
-                    IdRoles = table.Column<int>(nullable: false)
+                    IdRoles = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,7 +69,8 @@ namespace WebApp.Migrations
                     Email = table.Column<string>(maxLength: 300, nullable: true),
                     Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
-                    IdUser = table.Column<int>(nullable: false)
+                    IdUser = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -88,7 +93,8 @@ namespace WebApp.Migrations
                     Email = table.Column<string>(maxLength: 300, nullable: true),
                     Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
-                    IdUser = table.Column<int>(nullable: false)
+                    IdUser = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -111,7 +117,8 @@ namespace WebApp.Migrations
                     Email = table.Column<string>(maxLength: 300, nullable: true),
                     Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
-                    IdUser = table.Column<int>(nullable: false)
+                    IdUser = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,7 +141,8 @@ namespace WebApp.Migrations
                     Email = table.Column<string>(maxLength: 300, nullable: true),
                     Address = table.Column<string>(maxLength: 300, nullable: false),
                     Phone = table.Column<string>(maxLength: 10, nullable: false),
-                    IdUser = table.Column<int>(nullable: false)
+                    IdUser = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -159,7 +167,8 @@ namespace WebApp.Migrations
                     Title = table.Column<string>(maxLength: 300, nullable: false),
                     Video = table.Column<string>(nullable: false),
                     Content = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(maxLength: 300, nullable: false)
+                    Description = table.Column<string>(maxLength: 300, nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -187,7 +196,8 @@ namespace WebApp.Migrations
                     Title = table.Column<string>(maxLength: 200, nullable: false),
                     Descripsion = table.Column<string>(maxLength: 300, nullable: false),
                     Content = table.Column<string>(nullable: true),
-                    IdStudent = table.Column<int>(nullable: false)
+                    IdStudent = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -208,7 +218,8 @@ namespace WebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(maxLength: 300, nullable: false),
                     Content = table.Column<string>(nullable: false),
-                    IdLesson = table.Column<int>(nullable: false)
+                    IdLesson = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -229,7 +240,8 @@ namespace WebApp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(maxLength: 300, nullable: false),
                     Content = table.Column<string>(nullable: false),
-                    IdPost = table.Column<int>(nullable: false)
+                    IdPost = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

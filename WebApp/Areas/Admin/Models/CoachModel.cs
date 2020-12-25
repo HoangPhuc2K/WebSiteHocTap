@@ -37,5 +37,12 @@ namespace WebApp.Areas.Admin.Models
         public virtual UserModel User { get; set; }
 
         public ICollection<LessonModel> Lesson { get; set; }
+
+        public bool Status { get; set; }
+
+        public CoachModel()
+        {
+            Status = true;
+        }
     }
 }

@@ -35,5 +35,12 @@ namespace WebApp.Areas.Admin.Models
         [ForeignKey("IdUser")]
 
         public virtual UserModel User { get; set; }
+
+        public bool Status { get; set; }
+
+        public AdminForumModel()
+        {
+            Status = true;
+        }
     }
 }
