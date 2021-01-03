@@ -20,8 +20,14 @@ namespace WebApp.Areas.Admin.Models
         [Display(Name = "Content")]
         public string Content { get; set; }
         public int IdLesson { get; set; }
+
         [ForeignKey("IdLesson")]
         public virtual LessonModel Lesson { get; set; }
+        public int IdUser { get; set; }
+
+        [ForeignKey("IdUser")]
+
+        public virtual UserModel User { get; set; }
         public bool Status { get; set; }
 
         public CommemtLessonModel()

@@ -132,6 +132,29 @@ namespace WebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Post",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(maxLength: 200, nullable: false),
+                    Descripsion = table.Column<string>(maxLength: 300, nullable: false),
+                    Content = table.Column<string>(nullable: true),
+                    IdUser = table.Column<int>(nullable: false),
+                    Status = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Post", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Post_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Student",
                 columns: table => new
                 {
@@ -188,26 +211,32 @@ namespace WebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Post",
+                name: "CommemtPost",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(maxLength: 200, nullable: false),
-                    Descripsion = table.Column<string>(maxLength: 300, nullable: false),
-                    Content = table.Column<string>(nullable: true),
-                    IdStudent = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 300, nullable: false),
+                    Content = table.Column<string>(nullable: false),
+                    IdPost = table.Column<int>(nullable: false),
+                    IdUser = table.Column<int>(nullable: false),
                     Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Post", x => x.Id);
+                    table.PrimaryKey("PK_CommemtPost", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Post_Student_IdStudent",
-                        column: x => x.IdStudent,
-                        principalTable: "Student",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_CommemtPost_Post_IdPost",
+                        column: x => x.IdPost,
+                        principalTable: "Post",
+                        principalColumn: "Id"
+                       );
+                    table.ForeignKey(
+                        name: "FK_CommemtPost_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "Id"
+                        );
                 });
 
             migrationBuilder.CreateTable(
@@ -219,6 +248,7 @@ namespace WebApp.Migrations
                     Title = table.Column<string>(maxLength: 300, nullable: false),
                     Content = table.Column<string>(nullable: false),
                     IdLesson = table.Column<int>(nullable: false),
+                    IdUser = table.Column<int>(nullable: false),
                     Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -228,30 +258,14 @@ namespace WebApp.Migrations
                         name: "FK_CommemtLesson_Lesson_IdLesson",
                         column: x => x.IdLesson,
                         principalTable: "Lesson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CommemtPost",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(maxLength: 300, nullable: false),
-                    Content = table.Column<string>(nullable: false),
-                    IdPost = table.Column<int>(nullable: false),
-                    Status = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CommemtPost", x => x.Id);
+                        principalColumn: "Id"
+                        );
                     table.ForeignKey(
-                        name: "FK_CommemtPost_Post_IdPost",
-                        column: x => x.IdPost,
-                        principalTable: "Post",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_CommemtLesson_User_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "User",
+                        principalColumn: "Id"
+                        );
                 });
 
             migrationBuilder.CreateIndex(
@@ -278,9 +292,19 @@ namespace WebApp.Migrations
                 column: "IdLesson");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CommemtLesson_IdUser",
+                table: "CommemtLesson",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CommemtPost_IdPost",
                 table: "CommemtPost",
                 column: "IdPost");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CommemtPost_IdUser",
+                table: "CommemtPost",
+                column: "IdUser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lesson_IdCoach",
@@ -293,9 +317,9 @@ namespace WebApp.Migrations
                 column: "IdCourse");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_IdStudent",
+                name: "IX_Post_IdUser",
                 table: "Post",
-                column: "IdStudent");
+                column: "IdUser");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Student_IdUser",
@@ -324,6 +348,9 @@ namespace WebApp.Migrations
                 name: "CommemtPost");
 
             migrationBuilder.DropTable(
+                name: "Student");
+
+            migrationBuilder.DropTable(
                 name: "Lesson");
 
             migrationBuilder.DropTable(
@@ -334,9 +361,6 @@ namespace WebApp.Migrations
 
             migrationBuilder.DropTable(
                 name: "Course");
-
-            migrationBuilder.DropTable(
-                name: "Student");
 
             migrationBuilder.DropTable(
                 name: "User");

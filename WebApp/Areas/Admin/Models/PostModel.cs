@@ -25,11 +25,11 @@ namespace WebApp.Areas.Admin.Models
         [Display(Name = "Nội Dung")]
         public string Content { get; set; }
 
-        [Display(Name = "Mã Học Sinh")]
-        public int IdStudent { get; set; }
-        [ForeignKey("IdStudent")]
+        [Display(Name = "Tài khoản")]
+        public int IdUser { get; set; }
+        [ForeignKey("IdUser")]
 
-        public virtual StudentModel Student { get; set; }
+        public virtual UserModel User { get; set; }
         public ICollection<CommemtPostModel> CommemtPosts { get; set; }
 
         public bool Status { get; set; }

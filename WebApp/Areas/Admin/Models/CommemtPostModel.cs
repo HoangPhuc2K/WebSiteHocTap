@@ -22,6 +22,10 @@ namespace WebApp.Areas.Admin.Models
         public int IdPost { get; set; }
         [ForeignKey("IdPost")]
         public virtual PostModel Post { get; set; }
+        public int IdUser { get; set; }
+
+        [ForeignKey("IdUser")]
+        public virtual UserModel User { get; set; }
         public bool Status { get; set; }
 
         public CommemtPostModel()

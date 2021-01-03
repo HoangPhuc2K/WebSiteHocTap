@@ -58,7 +58,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id == 0)
             {
-                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
+                ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName");
                 return View(new AdminModel());
             }
             else
@@ -68,7 +68,7 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.IdUser);
+                ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName", adminModel.IdUser);
                 return View(adminModel);
             }
         }
@@ -106,9 +106,10 @@ namespace WebApp.Areas.Admin.Controllers
                         }
                     }
                 }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Admin.Where(sp => sp.Status == true).ToList()) });
+                var dPContext = _context.Admin.Where(sp => sp.Status == true).Include(a => a.User);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
             }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminModel.IdUser);
+            ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName", adminModel.IdUser);
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", adminModel)});
         }
 
@@ -140,7 +141,8 @@ namespace WebApp.Areas.Admin.Controllers
             var adminModel = await _context.Admin.FindAsync(id);
             _context.Admin.Remove(adminModel);
             await _context.SaveChangesAsync();
-            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Admin.Where(sp => sp.Status == true).ToList()) });
+            var dPContext = _context.Admin.Where(sp => sp.Status == true).Include(a => a.User);
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
         }
 
         //Get:Admin/Admin/Profile/id
@@ -153,7 +155,8 @@ namespace WebApp.Areas.Admin.Controllers
             var adminModel = await _context.Admin.Where(sp => sp.IdUser == id).FirstOrDefaultAsync();
             if(adminModel == null)
             {
-                return NotFound();
+                AdminModel createAdmin = new AdminModel();
+                createAdmin.IdUser = (int)id; 
             }
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", id);
             ViewData["Img"] = _context.User.Find(id).Img;

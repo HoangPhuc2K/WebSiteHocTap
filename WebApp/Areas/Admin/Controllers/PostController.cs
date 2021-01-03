@@ -23,7 +23,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/Post
         public async Task<IActionResult> Index()
         {
-            var dPContext = _context.Post.Include(p => p.Student);
+            var dPContext = _context.Post.Where(sp => sp.Status == true).Include(p => p.User);
             return View(await dPContext.ToListAsync());
         }
 
@@ -36,7 +36,7 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             var postModel = await _context.Post
-                .Include(p => p.Student)
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (postModel == null)
             {
@@ -51,7 +51,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id == 0)
             {
-                ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName");
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
                 return View(new PostModel());
             }
             else
@@ -61,7 +61,7 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-                ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName", postModel.Id);
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", postModel.IdUser);
                 return View(postModel);
             }
         }
@@ -71,7 +71,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Descripsion,Content,IdStudent")] PostModel postModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Descripsion,Content,IdUser")] PostModel postModel)
         {
             if (ModelState.IsValid)
             {
@@ -99,10 +99,10 @@ namespace WebApp.Areas.Admin.Controllers
                         }
                     }
                 }
-                ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName", postModel.Id);
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", postModel.IdUser);
                 return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Post.ToList()) });
             }
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "FullName", postModel.Id);
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", postModel.IdUser);
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", postModel) });
         }
 
@@ -119,7 +119,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address", postModel.IdStudent);
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", postModel.IdUser);
             return View(postModel);
         }
 
@@ -128,7 +128,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Descripsion,Content,IdStudent")] PostModel postModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Descripsion,Content,IdUser")] PostModel postModel)
         {
             if (id != postModel.Id)
             {
@@ -155,7 +155,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdStudent"] = new SelectList(_context.Student, "Id", "Address", postModel.IdStudent);
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", postModel.IdUser);
             return View(postModel);
         }
 
@@ -168,7 +168,7 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             var postModel = await _context.Post
-                .Include(p => p.Student)
+                .Include(p => p.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (postModel == null)
             {

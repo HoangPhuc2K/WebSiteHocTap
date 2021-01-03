@@ -29,7 +29,7 @@ namespace WebApp.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            var dPContext = _context.User.Include(u => u.Roles);
+            var dPContext = _context.User.Where(sp => sp.Status == true).Include(u => u.Roles);
             return View(await dPContext.ToListAsync());
         }
 
@@ -57,7 +57,7 @@ namespace WebApp.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
-            ViewData["IdRoles"] = new SelectList(_context.Roles, "Id", "Name");
+            ViewData["IdRoles"] = new SelectList(_context.Roles.Where(sp => sp.Status == true), "Id", "Name");
             return View();
         }
 
@@ -83,7 +83,7 @@ namespace WebApp.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRoles"] = new SelectList(_context.Roles, "Id", "Name", userModel.IdRoles);
+            ViewData["IdRoles"] = new SelectList(_context.Roles.Where(sp => sp.Status == true), "Id", "Name", userModel.IdRoles);
             return View(userModel);
         }
 
@@ -101,7 +101,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdRoles"] = new SelectList(_context.Roles, "Id", "Name", userModel.IdRoles);
+            ViewData["IdRoles"] = new SelectList(_context.Roles.Where(sp => sp.Status == true), "Id", "Name", userModel.IdRoles);
             return View(userModel);
         }
 
@@ -156,7 +156,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdRoles"] = new SelectList(_context.Roles, "Id", "Name", userModel.IdRoles);
+            ViewData["IdRoles"] = new SelectList(_context.Roles.Where(sp => sp.Status == true), "Id", "Name", userModel.IdRoles);
             return View(userModel);
         }
 

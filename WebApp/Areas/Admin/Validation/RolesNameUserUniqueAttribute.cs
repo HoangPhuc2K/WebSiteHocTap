@@ -7,21 +7,22 @@ using WebApp.Areas.Admin.Data;
 
 namespace WebApp.Areas.Admin.Validation
 {
-    public class UserNameUserUniqueAttribute: ValidationAttribute
+    public class RolesNameUserUniqueAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object value,ValidationContext validationContext)
         {
             var _context = (DPContext)validationContext.GetService(typeof(DPContext));
-            var entity = _context.User.SingleOrDefault(e => e.AccountName == value.ToString() && e.Status == true);
+            var entity = _context.Roles.SingleOrDefault(s => s.Name == value.ToString() && s.Status == true);
             if(entity != null)
             {
                 return new ValidationResult(GetErrorMessage(value.ToString()));
             }
             return ValidationResult.Success;
         }
-        public string GetErrorMessage(string username)
+
+        public string GetErrorMessage(string RolesName)
         {
-            return $"Tên {username } đã tồn tại";
+            return $"Tên quyền {RolesName} đã tồn tại";
         }
     }
 }

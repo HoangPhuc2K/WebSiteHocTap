@@ -9,7 +9,7 @@ using WebApp.Areas.Admin.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DPContext))]
-    [Migration("20201225120526_Create")]
+    [Migration("20210103025312_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,6 +154,9 @@ namespace WebApp.Migrations
                     b.Property<int>("IdLesson")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -165,6 +168,8 @@ namespace WebApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdLesson");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("CommemtLesson");
                 });
@@ -183,6 +188,9 @@ namespace WebApp.Migrations
                     b.Property<int>("IdPost")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -194,6 +202,8 @@ namespace WebApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdPost");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("CommemtPost");
                 });
@@ -291,7 +301,7 @@ namespace WebApp.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
-                    b.Property<int>("IdStudent")
+                    b.Property<int>("IdUser")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
@@ -304,7 +314,7 @@ namespace WebApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdStudent");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Post");
                 });
@@ -434,6 +444,12 @@ namespace WebApp.Migrations
                         .HasForeignKey("IdLesson")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
+                        .WithMany("commemtLesson")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApp.Areas.Admin.Models.CommemtPostModel", b =>
@@ -441,6 +457,12 @@ namespace WebApp.Migrations
                     b.HasOne("WebApp.Areas.Admin.Models.PostModel", "Post")
                         .WithMany("CommemtPosts")
                         .HasForeignKey("IdPost")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
+                        .WithMany("commemtPost")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -462,9 +484,9 @@ namespace WebApp.Migrations
 
             modelBuilder.Entity("WebApp.Areas.Admin.Models.PostModel", b =>
                 {
-                    b.HasOne("WebApp.Areas.Admin.Models.StudentModel", "Student")
+                    b.HasOne("WebApp.Areas.Admin.Models.UserModel", "User")
                         .WithMany("Post")
-                        .HasForeignKey("IdStudent")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

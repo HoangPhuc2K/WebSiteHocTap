@@ -26,7 +26,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/CommemtPost
         public async Task<IActionResult> Index()
         {
-            var dPContext = _context.CommemtPost.Include(c => c.Post);
+            var dPContext = _context.CommemtPost.Where(sp => sp.Status == true).Include(c => c.Post).Include(b => b.User);
             return View(await dPContext.ToListAsync());
         }
 
@@ -57,6 +57,7 @@ namespace WebApp.Areas.Admin.Controllers
             if (id == 0)
             {
                 ViewData["IdPost"] = new SelectList(_context.Post, "Id", "Descripsion");
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
                 return View(new CommemtPostModel());
             }
             else
@@ -67,6 +68,7 @@ namespace WebApp.Areas.Admin.Controllers
                     return NotFound();
                 }
                 ViewData["IdPost"] = new SelectList(_context.Post, "Id", "Descripsion", commemtPostModel.Id);
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
                 return View(commemtPostModel);
             }
             
@@ -77,7 +79,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Content,IdPost")] CommemtPostModel commemtPostModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Content,IdPost,IdUser")] CommemtPostModel commemtPostModel)
         {
             
             if (ModelState.IsValid)
@@ -108,10 +110,11 @@ namespace WebApp.Areas.Admin.Controllers
                         }
                     }
                 }
-                ViewData["IdPost"] = new SelectList(_context.Post, "Id", "Descripsion", commemtPostModel.IdPost);
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.CommemtPost.ToList()) });
+                var dPContext = _context.CommemtPost.Where(sp => sp.Status == true).Include(c => c.Post).Include(b => b.User);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
             }
             ViewData["IdPost"] = new SelectList(_context.Post, "Id", "Descripsion", commemtPostModel.IdPost);
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName",commemtPostModel.IdUser);
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", commemtPostModel) });
         }
 
@@ -142,7 +145,8 @@ namespace WebApp.Areas.Admin.Controllers
             var commemtPostModel = await _context.CommemtPost.FindAsync(id);
             _context.CommemtPost.Remove(commemtPostModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var dPContext = _context.CommemtPost.Where(sp => sp.Status == true).Include(c => c.Post).Include(b => b.User);
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
         }
 
         private bool CommemtPostModelExists(int id)

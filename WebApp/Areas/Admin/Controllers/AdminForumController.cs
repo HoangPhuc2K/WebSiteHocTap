@@ -57,7 +57,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id == 0)
             {
-                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
+                ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName");
                 return View(new AdminForumModel());
             }
             else
@@ -67,7 +67,7 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName",adminForumModel.Id);
+                ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName",adminForumModel.Id);
                 return View(adminForumModel);
             }
         }
@@ -105,10 +105,10 @@ namespace WebApp.Areas.Admin.Controllers
                         { throw; }
                     }
                 }
-                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.AdminForum.Where(sp => sp.Status == true).Include(sp => sp.User).ToList()) });
+                var dPContext = _context.AdminForum.Where(sp => sp.Status == true).Include(a => a.User);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
             }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
+            ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName", adminForumModel.Id);
             return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", adminForumModel) });
         }
 
@@ -139,7 +139,8 @@ namespace WebApp.Areas.Admin.Controllers
             var adminForumModel = await _context.AdminForum.FindAsync(id);
             _context.AdminForum.Remove(adminForumModel);
             await _context.SaveChangesAsync();
-            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.AdminForum.Where(sp => sp.Status == true).ToList()) });
+            var dPContext = _context.AdminForum.Where(sp => sp.Status == true).Include(a => a.User);
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
         }
 
         //Get:Admin/AdminForum/Profile/id
@@ -154,7 +155,7 @@ namespace WebApp.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", id);
+            ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName", id);
             ViewData["Img"] = _context.User.Find(id).Img;
             return View(adminForumModel);
         }
@@ -207,7 +208,7 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 return RedirectToAction("Profile", id);
             }
-            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", adminForumModel.Id);
+            ViewData["IdUser"] = new SelectList(_context.User.Where(sp => sp.Status == true), "Id", "AccountName", adminForumModel.Id);
             ViewData["Img"] = _context.User.Find(adminForumModel.IdUser).Img;
             return View(adminForumModel);
         }

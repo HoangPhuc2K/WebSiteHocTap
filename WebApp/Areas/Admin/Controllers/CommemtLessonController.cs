@@ -26,7 +26,7 @@ namespace WebApp.Areas.Admin.Controllers
         // GET: Admin/CommemtLesson
         public async Task<IActionResult> Index()
         {
-            var dPContext = _context.CommemtLesson.Include(c => c.Lesson);
+            var dPContext = _context.CommemtLesson.Where(sp => sp.Status == true).Include(c => c.Lesson).Include(c => c.User);
             return View(await dPContext.ToListAsync());
         }
 
@@ -58,6 +58,7 @@ namespace WebApp.Areas.Admin.Controllers
             if (id == 0)
             {
                 ViewData["IdLesson"] = new SelectList(_context.Lesson, "Id", "Content");
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
                 return View(new CommemtLessonModel());
             }
             else
@@ -67,7 +68,8 @@ namespace WebApp.Areas.Admin.Controllers
                 {
                     return NotFound();
                 }
-                ViewData["IdLesson"] = new SelectList(_context.Lesson, "Id", "Content", commemtLessonModel.Id);
+                ViewData["IdLesson"] = new SelectList(_context.Lesson, "Id", "Content");
+                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
                 return View(commemtLessonModel);
             }
 
@@ -79,7 +81,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Content,IdLesson")] CommemtLessonModel commemtLessonModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Content,IdLesson,IdUser")] CommemtLessonModel commemtLessonModel)
         {
 
             if (ModelState.IsValid)
@@ -108,10 +110,11 @@ namespace WebApp.Areas.Admin.Controllers
                         }
                     }
                 }
-                ViewData["IdLesson"] = new SelectList(_context.Lesson, "Id", "Content", commemtLessonModel.IdLesson);
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.CommemtLesson.ToList()) });
+                var dPContext = _context.CommemtLesson.Where(sp => sp.Status == true).Include(c => c.Lesson).Include(c => c.User);
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
             }
             ViewData["IdLesson"] = new SelectList(_context.Lesson, "Id", "Content", commemtLessonModel.IdLesson);
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", commemtLessonModel.IdUser);
             return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "AddOrEdit",commemtLessonModel) });
         }
 
@@ -142,7 +145,8 @@ namespace WebApp.Areas.Admin.Controllers
             var commemtLessonModel = await _context.CommemtLesson.FindAsync(id);
             _context.CommemtLesson.Remove(commemtLessonModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var dPContext = _context.CommemtLesson.Where(sp => sp.Status == true).Include(c => c.Lesson).Include(c => c.User);
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", dPContext.ToList()) });
         }
 
         private bool CommemtLessonModelExists(int id)
