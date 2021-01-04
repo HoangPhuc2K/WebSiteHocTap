@@ -15,6 +15,7 @@ namespace WebApp.Migrations
                     Title = table.Column<string>(maxLength: 200, nullable: false),
                     Description = table.Column<string>(maxLength: 300, nullable: false),
                     Lang = table.Column<string>(maxLength: 300, nullable: false),
+                    Img = table.Column<string>(nullable: false),
                     Status = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -229,14 +230,12 @@ namespace WebApp.Migrations
                         name: "FK_CommemtPost_Post_IdPost",
                         column: x => x.IdPost,
                         principalTable: "Post",
-                        principalColumn: "Id"
-                       );
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CommemtPost_User_IdUser",
                         column: x => x.IdUser,
                         principalTable: "User",
-                        principalColumn: "Id"
-                        );
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -258,14 +257,12 @@ namespace WebApp.Migrations
                         name: "FK_CommemtLesson_Lesson_IdLesson",
                         column: x => x.IdLesson,
                         principalTable: "Lesson",
-                        principalColumn: "Id"
-                        );
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CommemtLesson_User_IdUser",
                         column: x => x.IdUser,
                         principalTable: "User",
-                        principalColumn: "Id"
-                        );
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

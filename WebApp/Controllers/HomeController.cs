@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using WebApp.Areas.Admin.Data;
+using WebApp.Areas.Admin.Models;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -30,6 +33,40 @@ namespace WebApp.Controllers
         }
         public async Task<IActionResult> IndexCourse()
         {
+            List<CourseModel> listCourse = new List<CourseModel>();
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI"))
+                {
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    listCourse = JsonConvert.DeserializeObject<List<CourseModel>>(apiResponse);
+                }
+            }
+            if(listCourse == null)
+            {
+                return NotFound();
+            }
+            return View(listCourse);
+        }
+        public async Task<IActionResult> DetailLesson(int id)
+        {
+            CourseModel courseModel = new CourseModel();
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI/"+id))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound();
+                    }
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    courseModel = JsonConvert.DeserializeObject<CourseModel>(apiResponse);
+                }
+            }
+            if (courseModel == null)
+            {
+                return NotFound();
+            }
             return View(await _context.Course.ToListAsync());
         }
         public async Task<IActionResult> DetailLesson(int? id)
@@ -45,6 +82,7 @@ namespace WebApp.Controllers
             }
             return View(lessonModel);
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

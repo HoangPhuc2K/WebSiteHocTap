@@ -9,7 +9,7 @@ using WebApp.Areas.Admin.Data;
 namespace WebApp.Migrations
 {
     [DbContext(typeof(DPContext))]
-    [Migration("20210103025312_Create")]
+    [Migration("20210103070230_Create")]
     partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -219,6 +219,10 @@ namespace WebApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
+
+                    b.Property<string>("Img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Lang")
                         .IsRequired()
