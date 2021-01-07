@@ -47,9 +47,21 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Course/Create
-        public IActionResult Create()
+        public async Task<IActionResult> AddOrEdit(int id = 0)
         {
-            return View();
+            if (id == 0)
+            {
+                return View(new CourseModel());
+            }
+            else
+            {
+                var courseModel = await _context.Course.FindAsync(id);
+                if (courseModel == null)
+                {
+                    return NotFound();
+                }
+                return View(courseModel);
+            }    
         }
 
         // POST: Admin/Course/Create
@@ -57,15 +69,37 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Lang")] CourseModel courseModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Description,Lang")] CourseModel courseModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(courseModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(id == 0)
+                {
+                    _context.Add(courseModel);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    try
+                    {
+                        _context.Update(courseModel);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!CourseModelExists(courseModel.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Course.ToList()) });
             }
-            return View(courseModel);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", courseModel) });
         }
 
         // GET: Admin/Course/Edit/5
@@ -145,9 +179,9 @@ namespace WebApp.Areas.Admin.Controllers
             var courseModel = await _context.Course.FindAsync(id);
             _context.Course.Remove(courseModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Course.ToList()) });
         }
-
+         
         private bool CourseModelExists(int id)
         {
             return _context.Course.Any(e => e.Id == id);

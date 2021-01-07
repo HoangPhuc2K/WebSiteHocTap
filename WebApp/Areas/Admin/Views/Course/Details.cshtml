@@ -1,17 +1,9 @@
 ﻿@model WebApp.Areas.Admin.Models.CourseModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Details";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+<h1>Details</h1>
 
 <div>
     <h4>CourseModel</h4>
@@ -35,8 +27,5 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
-</body>
-</html>
