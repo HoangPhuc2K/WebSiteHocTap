@@ -48,11 +48,25 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Lesson/Create
-        public IActionResult Create()
+        public async Task<IActionResult> AddOrEdit(int id = 0)
         {
-            ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address");
-            ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description");
-            return View();
+            if (id == 0)
+            {
+                ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address");
+                ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description");
+                return View(new LessonModel());
+            }
+            else
+            {
+                var lessonModel = await _context.Lesson.FindAsync(id);
+                if (lessonModel == null)
+                {
+                    return NotFound();
+                }
+                ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address", lessonModel.Id);
+                ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description", lessonModel.Id);
+                return View(lessonModel);
+            }
         }
 
         // POST: Admin/Lesson/Create
@@ -60,17 +74,39 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LessonName,IdCourse,IdCoach,Title,Video,Content,Description")] LessonModel lessonModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,LessonName,IdCourse,IdCoach,Title,Video,Content,Description")] LessonModel lessonModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(lessonModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(id == 0)
+                {
+                    _context.Add(lessonModel);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    try
+                    {
+                        _context.Update(lessonModel);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!LessonModelExists(lessonModel.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                }
+                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Lesson.ToList()) });
             }
             ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address", lessonModel.IdCoach);
             ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description", lessonModel.IdCourse);
-            return View(lessonModel);
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", lessonModel) });
         }
 
         // GET: Admin/Lesson/Edit/5
@@ -156,7 +192,7 @@ namespace WebApp.Areas.Admin.Controllers
             var lessonModel = await _context.Lesson.FindAsync(id);
             _context.Lesson.Remove(lessonModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Lesson.ToList()) });
         }
 
         private bool LessonModelExists(int id)
