@@ -13,7 +13,7 @@ namespace WebApp.Areas.Admin.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Không Được Bỏ Trống")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 50, ErrorMessage = "Mật Khẩu Dài Hơn 8 Ký Tự", MinimumLength = 8)]
         [Display(Name = "Họ Và Tên")]
         public string FullName { get; set; }
 
@@ -23,14 +23,13 @@ namespace WebApp.Areas.Admin.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Không Được Bỏ Trống")]
-        [StringLength(maximumLength: 300, ErrorMessage = "Địa chỉ không dài Hơn 300 Ký Tự")]
+        [StringLength(maximumLength: 300, ErrorMessage = "Mật Khẩu Dài Hơn 8 Ký Tự", MinimumLength = 8)]
         [Display(Name = "Địa Chỉ")]
         public string Address { get; set; }
-
         [Required(ErrorMessage = "Không Được Bỏ Trống")]
         [Display(Name = "Số Điện Thoại")]
         [DataType(DataType.PhoneNumber)]
-        [StringLength(maximumLength: 12, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 10)]
+        [StringLength(maximumLength: 10, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 10)]
         public string Phone { get; set; }
 
         public int IdUser { get; set; }

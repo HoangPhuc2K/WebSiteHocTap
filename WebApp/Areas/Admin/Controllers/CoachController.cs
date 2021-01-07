@@ -50,24 +50,10 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Coach/Create
-        public async Task<IActionResult> AddOrEdit(int id = 0)
+        public IActionResult Create()
         {
-            if(id == 0)
-            {
-                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
-                return View(new CoachModel());
-            }
-            else
-            {
-                var coachModel = await _context.Coach.FindAsync(id);
-                if (coachModel == null)
-                {
-                    return NotFound();
-                }
-                ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", coachModel.Id);
-                return View(coachModel);
-            }
-           
+            ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName");
+            return View();
         }
 
         // POST: Admin/Coach/Create
@@ -75,39 +61,16 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,FullName,Email,Address,Phone,IdUser")] CoachModel coachModel)
+        public async Task<IActionResult> Create([Bind("Id,FullName,Email,Address,Phone,IdUser")] CoachModel coachModel)
         {
             if (ModelState.IsValid)
             {
-                if(id == 0)
-                {
-                    _context.Add(coachModel);
-                    await _context.SaveChangesAsync();
-
-                }
-                else
-                {
-                    try
-                    {
-                        _context.Update(coachModel);
-                        await _context.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!CoachModelExists(coachModel.Id))
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    } 
-                }
-                return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Coach.ToList()) });
+                _context.Add(coachModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", coachModel.IdUser);
-            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", coachModel) });
+            return View(coachModel);
         }
 
         // GET: Admin/Coach/Edit/5
@@ -190,7 +153,7 @@ namespace WebApp.Areas.Admin.Controllers
             var coachModel = await _context.Coach.FindAsync(id);
             _context.Coach.Remove(coachModel);
             await _context.SaveChangesAsync();
-            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Coach.ToList()) });
+            return RedirectToAction(nameof(Index));
         }
 
         //Get:Admin/Coach/Profile/id
