@@ -21,13 +21,34 @@ using WebApp;
 #nullable disable
 #nullable restore
 #line 2 "D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\Views\_ViewImports.cshtml"
+using WebApp.Areas.Admin.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 3 "D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\Views\_ViewImports.cshtml"
+using System.Net.Http;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\Views\_ViewImports.cshtml"
+using Newtonsoft.Json;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\Views\_ViewImports.cshtml"
 using WebApp.Models;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"edb7d6a866615394d090762bc05a5d2fe1a2b771", @"/Views/Shared/_HeaderPartial.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"fc48f17eb9bac3476d8060730298bf398eb2fa5e", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"819e68de9bbbc7d89a0314828859c43ca94fcae9", @"/Views/_ViewImports.cshtml")]
     public class Views_Shared__HeaderPartial : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -110,7 +131,7 @@ using WebApp.Models;
 
             <!-- Topbar Search -->
             ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "edb7d6a866615394d090762bc05a5d2fe1a2b7718368", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "edb7d6a866615394d090762bc05a5d2fe1a2b7718924", async() => {
                 WriteLiteral(@"
                 <div class=""input-group"">
                     <input type=""text"" class=""form-control bg-light border-0 small"" placeholder=""Tìm kiếm ...."" aria-label=""Search"" aria-describedby=""basic-addon2"">
@@ -148,7 +169,7 @@ using WebApp.Models;
                     <!-- Dropdown - Messages -->
                     <div class=""dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"" aria-labelledby=""searchDropdown"">
                         ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "edb7d6a866615394d090762bc05a5d2fe1a2b77110905", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "edb7d6a866615394d090762bc05a5d2fe1a2b77111461", async() => {
                 WriteLiteral(@"
                             <div class=""input-group"">
                                 <input type=""text"" class=""form-control bg-light border-0 small"" placeholder=""Tìm kiếm......"" aria-label=""Search"" aria-describedby=""basic-addon2"">
@@ -244,7 +265,7 @@ using WebApp.Models;
                         <a class=""dropdown-item d-flex align-items-center"" href=""#"">
                             <div class=""dropdown-list-image mr-3"">
                                 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "edb7d6a866615394d090762bc05a5d2fe1a2b77116981", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "edb7d6a866615394d090762bc05a5d2fe1a2b77117537", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -333,7 +354,7 @@ AddHtmlAttributeValue("", 7484, img, 7484, 4, false);
 #line hidden
 #nullable disable
             WriteLiteral("</span>\r\n                        ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "edb7d6a866615394d090762bc05a5d2fe1a2b77122493", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "edb7d6a866615394d090762bc05a5d2fe1a2b77123049", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -379,7 +400,7 @@ WriteAttributeValue("", 10930, url, 10930, 4, false);
 #line hidden
 #nullable disable
             WriteLiteral("                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "edb7d6a866615394d090762bc05a5d2fe1a2b77125158", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "edb7d6a866615394d090762bc05a5d2fe1a2b77125714", async() => {
                 WriteLiteral("\r\n                                <i class=\"fas fa-cogs fa-sm fa-fw mr-2 text-gray-400\"></i>\r\n                                Quản Lí\r\n                            ");
             }
             );

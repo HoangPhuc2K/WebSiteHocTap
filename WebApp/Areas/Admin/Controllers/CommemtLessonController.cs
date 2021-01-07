@@ -115,7 +115,7 @@ namespace WebApp.Areas.Admin.Controllers
             }
             ViewData["IdLesson"] = new SelectList(_context.Lesson, "Id", "Content", commemtLessonModel.IdLesson);
             ViewData["IdUser"] = new SelectList(_context.User, "Id", "AccountName", commemtLessonModel.IdUser);
-            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "AddOrEdit",commemtLessonModel) });
+            return Json(new { isValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit",commemtLessonModel) });
         }
 
         // GET: Admin/CommemtLesson/Delete/5

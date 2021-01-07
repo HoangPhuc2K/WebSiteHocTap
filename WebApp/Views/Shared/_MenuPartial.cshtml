@@ -39,6 +39,17 @@
     </div>
 
     <!-- Nav Item - menu khoahoc -->
+    @{ 
+        List<CourseModel> listCourseModel = new List<CourseModel>();
+        using (var client = new HttpClient())
+        {
+            using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI/"))
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                listCourseModel = JsonConvert.DeserializeObject<List<CourseModel>>(apiResponse);
+            }
+        }
+    }
     <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-book-open"></i>
@@ -47,17 +58,17 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Lập trình:</h6>
-                <a class="collapse-item" href="#">Lập trình Android</a>
-                <a class="collapse-item" href="#">Lập trình C++</a>
-                <a class="collapse-item" href="#">Lập trình C# .Net</a>
-                <a class="collapse-item" href="#">Lập trình Java</a>
-                <a class="collapse-item" href="#">Unity3D</a>
+                @foreach (var item in listCourseModel)
+                {
+                    <a class="collapse-item" style="white-space:normal" href="#">@item.Title</a>
+                }
 
-                <div class="collapse-divider"></div>
+
+                @*<div class="collapse-divider"></div>
                 <h6 class="collapse-header">Văn phòng:</h6>
                 <a class="collapse-item" href="#">Microsoft Word 2016</a>
                 <a class="collapse-item" href="#">Microsoft Excel 2016</a>
-                <a class="collapse-item" href="#">Microsoft PowerPoint 2016</a>
+                <a class="collapse-item" href="#">Microsoft PowerPoint 2016</a>*@
             </div>
         </div>
 

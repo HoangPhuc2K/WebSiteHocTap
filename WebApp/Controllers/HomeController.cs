@@ -48,38 +48,90 @@ namespace WebApp.Controllers
             }
             return View(listCourse);
         }
-        public async Task<IActionResult> DetailLesson(int id)
+
+        public async Task<IActionResult> DetailCourse(int id)
         {
-            CourseModel courseModel = new CourseModel();
+            List<LessonModel> listLessonModel = new List<LessonModel>();
             using (var client = new HttpClient())
             {
-                using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI/"+id))
+                using (var response = await client.GetAsync("https://localhost:44379/api/LessonAPI/" + id))
                 {
                     if (!response.IsSuccessStatusCode)
                     {
                         return NotFound();
                     }
                     string apiResponse = await response.Content.ReadAsStringAsync();
-                    courseModel = JsonConvert.DeserializeObject<CourseModel>(apiResponse);
+                    listLessonModel = JsonConvert.DeserializeObject<List<LessonModel>>(apiResponse);
                 }
             }
-            if (courseModel == null)
+            int idLesson = listLessonModel.First().Id;
+            List<CommemtLessonModel> listCommentLesson = new List<CommemtLessonModel>();
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("https://localhost:44379/api/CommemtLessonAPI/" + idLesson))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound();
+                    }
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    listCommentLesson = JsonConvert.DeserializeObject<List<CommemtLessonModel>>(apiResponse);
+                }
+            }
+            if (listLessonModel == null)
             {
                 return NotFound();
             }
-            return View(await _context.Course.ToListAsync());
+            ViewBag.ListCom = listCommentLesson;
+            return View(listLessonModel);
         }
         public async Task<IActionResult> DetailLesson(int? id)
         {
-            if(id == null)
+            List<LessonModel> listLessonModel = new List<LessonModel>();
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("https://localhost:44379/api/LessonAPI/" + id))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound();
+                    }
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    listLessonModel = JsonConvert.DeserializeObject<List<LessonModel>>(apiResponse);
+                }
+            }
+            LessonModel lessonModel = new LessonModel();
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("https://localhost:44379/api/LessonAPIModels/" + id))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound();
+                    }
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    lessonModel = JsonConvert.DeserializeObject<LessonModel>(apiResponse);
+                }
+            }
+            List<CommemtLessonModel> listCommentLesson = new List<CommemtLessonModel>();
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("https://localhost:44379/api/CommemtLessonAPI/" + id))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound();
+                    }
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    listCommentLesson = JsonConvert.DeserializeObject<List<CommemtLessonModel>>(apiResponse);
+                }
+            }
+            if (lessonModel == null)
             {
                 return NotFound();
             }
-            var lessonModel = await _context.Lesson.FindAsync(id);
-            if(lessonModel == null)
-            {
-                return NotFound();
-            }
+            ViewBag.ListLesson = listLessonModel;
+            ViewBag.ListComment = listCommentLesson;
             return View(lessonModel);
         }
 

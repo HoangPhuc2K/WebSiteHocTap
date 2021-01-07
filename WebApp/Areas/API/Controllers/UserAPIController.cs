@@ -12,41 +12,48 @@ namespace WebApp.Areas.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LessonAPIController : ControllerBase
+    public class UserAPIController : ControllerBase
     {
         private readonly DPContext _context;
 
-        public LessonAPIController(DPContext context)
+        public UserAPIController(DPContext context)
         {
             _context = context;
         }
 
-        // GET: api/LessonAPI
+        // GET: api/UserAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<LessonModel>>> GetLesson()
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetUser()
         {
-            return await _context.Lesson.ToListAsync();
+            return await _context.User.ToListAsync();
         }
 
-        // GET: api/LessonAPI/5
+        // GET: api/UserAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<LessonModel>>> GetLessonModel(int id)
+        public async Task<ActionResult<UserModel>> GetUserModel(int id)
         {
-            return await _context.Lesson.OrderBy(sp => sp.Id).Where(sp => sp.Status == true && sp.IdCourse == id).ToListAsync();
+            var userModel = await _context.User.FindAsync(id);
+
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            return userModel;
         }
 
-        // PUT: api/LessonAPI/5
+        // PUT: api/UserAPI/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutLessonModel(int id, LessonModel lessonModel)
+        public async Task<IActionResult> PutUserModel(int id, UserModel userModel)
         {
-            if (id != lessonModel.Id)
+            if (id != userModel.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(lessonModel).State = EntityState.Modified;
+            _context.Entry(userModel).State = EntityState.Modified;
 
             try
             {
@@ -54,7 +61,7 @@ namespace WebApp.Areas.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!LessonModelExists(id))
+                if (!UserModelExists(id))
                 {
                     return NotFound();
                 }
@@ -67,37 +74,37 @@ namespace WebApp.Areas.API.Controllers
             return NoContent();
         }
 
-        // POST: api/LessonAPI
+        // POST: api/UserAPI
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<LessonModel>> PostLessonModel(LessonModel lessonModel)
+        public async Task<ActionResult<UserModel>> PostUserModel(UserModel userModel)
         {
-            _context.Lesson.Add(lessonModel);
+            _context.User.Add(userModel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLessonModel", new { id = lessonModel.Id }, lessonModel);
+            return CreatedAtAction("GetUserModel", new { id = userModel.Id }, userModel);
         }
 
-        // DELETE: api/LessonAPI/5
+        // DELETE: api/UserAPI/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<LessonModel>> DeleteLessonModel(int id)
+        public async Task<ActionResult<UserModel>> DeleteUserModel(int id)
         {
-            var lessonModel = await _context.Lesson.FindAsync(id);
-            if (lessonModel == null)
+            var userModel = await _context.User.FindAsync(id);
+            if (userModel == null)
             {
                 return NotFound();
             }
 
-            _context.Lesson.Remove(lessonModel);
+            _context.User.Remove(userModel);
             await _context.SaveChangesAsync();
 
-            return lessonModel;
+            return userModel;
         }
 
-        private bool LessonModelExists(int id)
+        private bool UserModelExists(int id)
         {
-            return _context.Lesson.Any(e => e.Id == id);
+            return _context.User.Any(e => e.Id == id);
         }
     }
 }
