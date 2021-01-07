@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
@@ -12,9 +13,22 @@
         "projectPath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\WebApp.csproj",
         "packagesPath": "C:\\Users\\12a12\\.nuget\\packages\\",
         "outputPath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\obj\\",
+=======
+    "C:\\Users\\Admin\\Documents\\DOAN\\WebSiteHocTap\\WebApp\\WebApp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Admin\\Documents\\DOAN\\WebSiteHocTap\\WebApp\\WebApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Admin\\Documents\\DOAN\\WebSiteHocTap\\WebApp\\WebApp.csproj",
+        "projectName": "WebApp",
+        "projectPath": "C:\\Users\\Admin\\Documents\\DOAN\\WebSiteHocTap\\WebApp\\WebApp.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Documents\\DOAN\\WebSiteHocTap\\WebApp\\obj\\",
+>>>>>>> b9ba8145ce26b400419a99b7f9b1e8a0e4d39ed8
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\12a12\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,6 +40,7 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +52,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
@@ -71,16 +87,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[3.1.0, 3.1.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -89,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
