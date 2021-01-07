@@ -28,6 +28,11 @@ namespace WebApp.Areas.Admin.Models
 
         public string Lang { get; set; }
 
+        [Required]
+        [Display(Name = "Images")]
+
+        public string Img { get; set; }
+
         public ICollection<LessonModel> Lesson { get; set; }
         public bool Status { get; set; }
 

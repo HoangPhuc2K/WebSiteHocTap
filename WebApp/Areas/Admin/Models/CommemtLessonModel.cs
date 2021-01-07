@@ -13,7 +13,7 @@ namespace WebApp.Areas.Admin.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(maximumLength: 300, ErrorMessage = "Độ Dài khong Vượt Qúa 300 Ký Tự", MinimumLength = 16)]
+        [StringLength(maximumLength: 300, ErrorMessage = "Độ Dài khong phù hợp", MinimumLength = 16)]
         [Display(Name = "Title")]
         public string Title { get; set; }
         [Required]

@@ -218,6 +218,10 @@ namespace WebApp.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasMaxLength(300);
 
+                    b.Property<string>("Img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Lang")
                         .IsRequired()
                         .HasColumnType("nvarchar(300)")
