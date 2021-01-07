@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vmp481YVkYB5vpCAg9Mivo81a/YvJLf6X5cFI0W77TUXpwqPYrjSxC8nJkuQv2pNwFiT+hzXdSZRcVdmQ7pvDA==",
+  "dgSpecHash": "SDAEbFm7WAPa+xFWJhwnqky7mRvDG7BeFSbuJiYxVWczAlPgrQyRtTaoynmdETWJsABc+GEJqx91LQuaXeZHng==",
   "success": true,
-  "projectFilePath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\Project\\WebApp\\WebApp.csproj",
+  "projectFilePath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\WebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\12a12\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\3.1.4\\microsoft.aspnetcore.jsonpatch.3.1.4.nupkg.sha512",

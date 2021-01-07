@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\Project\\WebApp\\WebApp.csproj": {}
+    "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\WebApp.csproj": {}
   },
   "projects": {
-    "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\Project\\WebApp\\WebApp.csproj": {
+    "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\WebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\Project\\WebApp\\WebApp.csproj",
+        "projectUniqueName": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\WebApp.csproj",
         "projectName": "WebApp",
-        "projectPath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\Project\\WebApp\\WebApp.csproj",
+        "projectPath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\WebApp.csproj",
         "packagesPath": "C:\\Users\\12a12\\.nuget\\packages\\",
-        "outputPath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\Project\\WebApp\\obj\\",
+        "outputPath": "D:\\N_3_HK_1\\LT WEB ASP.NET core\\DoAn\\WebSiteHocTap\\WebApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\12a12\\AppData\\Roaming\\NuGet\\NuGet.Config",
