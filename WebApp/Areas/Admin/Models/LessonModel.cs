@@ -34,7 +34,6 @@ namespace WebApp.Areas.Admin.Models
         [Display(Name = "Video")]
         public string Video { get; set; }
 
-        [Required]
         [Display(Name = "Content")]
         public string Content { get; set; }
 
