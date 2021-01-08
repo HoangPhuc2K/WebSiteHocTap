@@ -102,7 +102,7 @@ namespace WebApp
                 endpoints.MapAreaControllerRoute(
                    name: "AdminArea",
                    areaName: "Admin",
-                   pattern: "Admin/{controller=Admin}/{action=Index}/{id?}"
+                   pattern: "Admin/{controller=HomeAdmin}/{action=Index}/{id?}"
                    );
                 endpoints.MapControllerRoute(
                    name: "default",

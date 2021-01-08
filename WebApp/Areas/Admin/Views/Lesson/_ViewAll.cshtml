@@ -34,7 +34,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="overflow-auto">
         @foreach (var item in Model)
         {
             <tr>
@@ -48,11 +48,11 @@
                     @Html.DisplayFor(modelItem => item.Video)
                 </td>
                 <td class="col-sm-2">
-                    @Html.DisplayFor(modelItem => item.Content)
+                    @Html.Raw(item.Content)
                 </td>
-                <tdclass="col-sm-2">
+                <td class="col-sm-2">
                     @Html.DisplayFor(modelItem => item.Description)
-                </tdclass="col-sm-2">
+                </td class="col-sm-2">
                 <td>
                     @Html.DisplayFor(modelItem => item.Course.Description)
                 </td>
