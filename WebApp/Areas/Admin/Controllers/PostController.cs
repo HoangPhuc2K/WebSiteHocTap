@@ -176,6 +176,7 @@ namespace WebApp.Areas.Admin.Controllers
             }
 
             return View(postModel);
+
         }
 
         // POST: Admin/Post/Delete/5
@@ -186,7 +187,8 @@ namespace WebApp.Areas.Admin.Controllers
             var postModel = await _context.Post.FindAsync(id);
             _context.Post.Remove(postModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Post.ToList()) });
+
         }
 
         private bool PostModelExists(int id)
