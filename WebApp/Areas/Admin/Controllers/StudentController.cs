@@ -135,7 +135,7 @@ namespace WebApp.Areas.Admin.Controllers
             var studentModel = await _context.Student.FindAsync(id);
             _context.Student.Remove(studentModel);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Json(new { isValid = true, html = Helper.RenderRazorViewToString(this, "_ViewAll", _context.Student.ToList()) });
         }
 
         private bool StudentModelExists(int id)
