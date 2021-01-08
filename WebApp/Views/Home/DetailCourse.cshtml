@@ -142,7 +142,7 @@
             <div class="card-body overflow-auto">
                 @foreach (var item in Model)
                 {
-                    <a asp-action="DetailLesson" asp-route-id="@item.Id">@item.Title</a>
+                    <a asp-action="DetailLesson" asp-route-id="@item.Id">@item.Title</a> <br />
                 }
             </div>
         </div>

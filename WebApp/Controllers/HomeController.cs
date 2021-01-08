@@ -87,19 +87,6 @@ namespace WebApp.Controllers
         }
         public async Task<IActionResult> DetailLesson(int? id)
         {
-            List<LessonModel> listLessonModel = new List<LessonModel>();
-            using (var client = new HttpClient())
-            {
-                using (var response = await client.GetAsync("https://localhost:44379/api/LessonAPI/" + id))
-                {
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        return NotFound();
-                    }
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    listLessonModel = JsonConvert.DeserializeObject<List<LessonModel>>(apiResponse);
-                }
-            }
             LessonModel lessonModel = new LessonModel();
             using (var client = new HttpClient())
             {
@@ -113,10 +100,24 @@ namespace WebApp.Controllers
                     lessonModel = JsonConvert.DeserializeObject<LessonModel>(apiResponse);
                 }
             }
+            List<LessonModel> listLessonModel = new List<LessonModel>();
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync("https://localhost:44379/api/LessonAPI/" + lessonModel.IdCourse))
+                {
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return NotFound();
+                    }
+                    string apiResponse = await response.Content.ReadAsStringAsync();
+                    listLessonModel = JsonConvert.DeserializeObject<List<LessonModel>>(apiResponse);
+                }
+            }
+            
             List<CommemtLessonModel> listCommentLesson = new List<CommemtLessonModel>();
             using (var client = new HttpClient())
             {
-                using (var response = await client.GetAsync("https://localhost:44379/api/CommemtLessonAPI/" + id))
+                using (var response = await client.GetAsync("https://localhost:44379/api/CommemtLessonAPI/" + lessonModel.IdCourse))
                 {
                     if (!response.IsSuccessStatusCode)
                     {
