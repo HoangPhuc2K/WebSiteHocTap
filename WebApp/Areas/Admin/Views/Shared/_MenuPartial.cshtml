@@ -1,4 +1,7 @@
 ﻿
+@{ 
+    var ID = Context.User.Claims.ToList()[2].Value;
+}
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -29,80 +32,123 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Quản Lý Khoá Học</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Chức Năng</h6>
-                <a class="collapse-item" asp-action="Index" asp-controller="Course">Danh Sách Khoá Học</a>
+    @if (Context.User.IsInRole("Admin"))
+    {
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Khoá Học</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Course">Danh Sách Khoá Học</a>
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Quản Lý Bài Giảng</span>
-        </a>
-        <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Chức Năng</h6>
-                <a class="collapse-item" asp-action="Index" asp-controller="Lesson">Danh Sách Bài Giảng</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Bài Giảng</span>
+            </a>
+            <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Lesson">Danh Sách Bài Giảng</a>
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Quản Lý Tài Khoản</span>
-        </a>
-        <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Chức Năng</h6>
-                <a class="collapse-item" asp-action="Index" asp-controller="User">Danh Sách Tài Khoản</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo2" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Tài Khoản</span>
+            </a>
+            <div id="collapseTwo2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="User">Danh Sách Tài Khoản</a>
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo3" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Quản Lý Bài Viết</span>
-        </a>
-        <div id="collapseTwo3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Chức Năng</h6>
-                <a class="collapse-item" asp-action="Index" asp-controller="Post">Danh Sách Bài Viết</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo3" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Bài Viết</span>
+            </a>
+            <div id="collapseTwo3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Post">Danh Sách Bài Viết</a>
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo4" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Quản Lý Học Viên</span>
-        </a>
-        <div id="collapseTwo4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Chức Năng</h6>
-                <a class="collapse-item" asp-action="Index" asp-controller="Student">Danh Sách Học Viên</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo4" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Học Viên</span>
+            </a>
+            <div id="collapseTwo4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Student">Danh Sách Học Viên</a>
+                </div>
             </div>
-        </div>
-    </li>
-
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Tài Khoản Thành Viên</span>
-        </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Chức Năng</h6>
-                <a class="collapse-item" href="">Danh Sách TK Thành Viên</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Quyền</span>
+            </a>
+            <div id="collapseTwo5" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Roles">Danh Sách Quyền</a>
+                </div>
             </div>
-        </div>
-    </li>
+        </li>
+    }
+    @if (Context.User.IsInRole("Coach"))
+    {
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Khoá Học</span>
+            </a>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Course" asp-route-id="@ID">Danh Sách Khoá Học</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo1" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Bài Giảng</span>
+            </a>
+            <div id="collapseTwo1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Lesson" asp-route-id="@ID">Danh Sách Bài Giảng</a>
+                </div>
+            </div>
+        </li>
+    }
+    @if (Context.User.IsInRole("AdminForum"))
+    {
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo3" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Bài Viết</span>
+            </a>
+            <div id="collapseTwo3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Post">Danh Sách Bài Viết</a>
+                </div>
+            </div>
+        </li>
+     }
 
     <!-- Divider -->
     <hr class="sidebar-divider">

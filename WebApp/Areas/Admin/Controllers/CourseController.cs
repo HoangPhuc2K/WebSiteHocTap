@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Admin.Data;
 using WebApp.Areas.Admin.Models;
+using WebApp.Areas.Admin.Validation;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [AuthorizeRoles("Admin", "Coach")]
     [Area("Admin")]
     public class CourseController : Controller
     {

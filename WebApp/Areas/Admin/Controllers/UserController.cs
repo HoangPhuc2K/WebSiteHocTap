@@ -81,6 +81,58 @@ namespace WebApp.Areas.Admin.Controllers
                 }
                 userModel.Img = userModel.Id + "." + ful.FileName.Split('.')[ful.FileName.Split('.').Length - 1];
                 await _context.SaveChangesAsync();
+                var user = _context.User.Where(sp => sp.Id == userModel.Id).Include(s => s.Roles).FirstOrDefault();
+                switch (userModel.Roles.Name)
+                {
+                    case "Admin": 
+                        {
+                            AdminModel adminModel = new AdminModel();
+                            adminModel.FullName = user.AccountName;
+                            adminModel.Phone = "0000000000";
+                            adminModel.IdUser = user.Id;
+                            adminModel.Address = user.AccountName;
+                            adminModel.Email = user.AccountName;
+                            _context.Add(adminModel);
+                            await _context.SaveChangesAsync();
+                        }
+                        break;
+                    case "Coach":
+                        {
+                            CoachModel coachModel = new CoachModel();
+                            coachModel.FullName = user.AccountName;
+                            coachModel.Phone = "0000000000";
+                            coachModel.IdUser = user.Id;
+                            coachModel.Address = user.AccountName;
+                            coachModel.Email = user.AccountName;
+                            _context.Add(coachModel);
+                            await _context.SaveChangesAsync();
+                        }
+                        break;
+                    case "AdminForum":
+                        {
+                            AdminForumModel adminForumhModel = new AdminForumModel();
+                            adminForumhModel.FullName = user.AccountName;
+                            adminForumhModel.Phone = "0000000000";
+                            adminForumhModel.IdUser = user.Id;
+                            adminForumhModel.Address = user.AccountName;
+                            adminForumhModel.Email = user.AccountName;
+                            _context.Add(adminForumhModel);
+                            await _context.SaveChangesAsync();
+                        }
+                        break;
+                    case "Student":
+                        {
+                            StudentModel studentModel = new StudentModel();
+                            studentModel.FullName = user.AccountName;
+                            studentModel.Phone = "0000000000";
+                            studentModel.IdUser = user.Id;
+                            studentModel.Address = user.AccountName;
+                            studentModel.Email = user.AccountName;
+                            _context.Add(studentModel);
+                            await _context.SaveChangesAsync();
+                        }
+                        break;
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdRoles"] = new SelectList(_context.Roles.Where(sp => sp.Status == true), "Id", "Name", userModel.IdRoles);
@@ -266,6 +318,7 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {

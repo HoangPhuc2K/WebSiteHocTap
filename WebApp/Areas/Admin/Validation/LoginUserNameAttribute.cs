@@ -12,8 +12,8 @@ namespace WebApp.Areas.Admin.Validation
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var _context = (DPContext)validationContext.GetService(typeof(DPContext));
-            var entity = _context.User.SingleOrDefault(e => e.AccountName != value.ToString() && e.Status == true);
-            if (entity != null)
+            var entity = _context.User.Where(e => e.AccountName == value.ToString() && e.Status == true).FirstOrDefault();
+            if (entity == null)
             {
                 return new ValidationResult(GetErrorMessage(value.ToString()));
             }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Areas.Admin.Validation;
 
 namespace WebApp.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [AuthorizeRoles("Admin","Coach", "AdminForum")]
     [Area("Admin")]
     public class HomeAdminController : Controller
     {

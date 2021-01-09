@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Admin.Data;
 using WebApp.Areas.Admin.Models;
+using WebApp.Areas.Admin.Validation;
 
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AuthorizeRoles("Admin", "AdminForum")]
     public class PostController : Controller
     {
         private readonly DPContext _context;

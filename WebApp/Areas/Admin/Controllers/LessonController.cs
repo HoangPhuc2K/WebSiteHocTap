@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApp.Areas.Admin.Data;
 using WebApp.Areas.Admin.Models;
+using WebApp.Areas.Admin.Validation;
 
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [AuthorizeRoles("Admin", "Coach")]
     public class LessonController : Controller
     {
         private readonly DPContext _context;
@@ -21,9 +24,16 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Lesson
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id = 0)
         {
-            var dPContext = _context.Lesson.Include(l => l.Coach).Include(l => l.Course);
+            var dPContext = _context.Lesson.Include(l => l.Coach).Include(l => l.Course); ;
+            if (id == 0)
+            {
+                dPContext = _context.Lesson.Include(l => l.Coach).Include(l => l.Course);
+                return View(await dPContext.ToListAsync());
+            }
+            var dpuser = _context.User.Where(s => s.Id == id).Include(sp => sp.Coach).FirstOrDefault();
+            dPContext = _context.Lesson.Where(sp => sp.Status == true && sp.IdCoach == dpuser.Coach.Id).Include(l => l.Coach).Include(l => l.Course);
             return View(await dPContext.ToListAsync());
         }
 

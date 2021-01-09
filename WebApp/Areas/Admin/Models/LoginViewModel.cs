@@ -15,7 +15,6 @@ namespace WebApp.Areas.Admin.Models
 
         [Required(ErrorMessage = "Không được bỏ trống")]
         [DataType(DataType.Password)]
-        [LoginPassword]
         public string Password { get; set; }
 
         public bool Remember { get; set; }

@@ -90,4 +90,4 @@ function readURL(input, idImg) {
 			}
 			reader.readAsDataURL(input.files[0]);
         }
-	}
+}
