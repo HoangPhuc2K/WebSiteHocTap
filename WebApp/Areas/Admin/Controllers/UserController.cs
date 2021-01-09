@@ -202,23 +202,25 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login([Bind("UserName,Password,Remember,RequestPath")] LoginViewModel model)
         {
-            var result = _context.User.Where(
+            if (ModelState.IsValid)
+            {
+                var result = _context.User.Where(
                     s => s.AccountName == model.UserName && s.AccountPassword == model.Password && s.Status == true
-                ).FirstOrDefault(); 
-            if (result == null)
-            {
-                ViewData["LoginError"] = "Tài khoản hoặc mật khẩu không đúng";
-                return View();
-            }
-            var Roles = _context.Roles.Find(result.IdRoles);
-            if(Roles == null)
-            {
-                return NotFound();
-            }
-            // create claims
-            List<Claim> claims = new List<Claim>
+                ).FirstOrDefault();
+                if (result == null)
+                {
+                    ViewData["LoginError"] = "Tài khoản hoặc mật khẩu không đúng";
+                    return View();
+                }
+                var Roles = _context.Roles.Find(result.IdRoles);
+                if (Roles == null)
+                {
+                    return NotFound();
+                }
+                // create claims
+                List<Claim> claims = new List<Claim>
             {
                     new Claim(ClaimTypes.Name, result.AccountName),
                     new Claim(ClaimTypes.Role, Roles.Name),
@@ -226,36 +228,38 @@ namespace WebApp.Areas.Admin.Controllers
                     new Claim("img",result.Img),
             };
 
-            // create identity
-            ClaimsIdentity identity = new ClaimsIdentity(claims, model.UserName);
+                // create identity
+                ClaimsIdentity identity = new ClaimsIdentity(claims, model.UserName);
 
-            // create principal
-            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                // create principal
+                ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-            // sign-in
-            if (model.Remember)
-            {
-                await HttpContext.SignInAsync(
-                        scheme: "SecurityScheme",
-                        principal: principal,
-                        properties: new AuthenticationProperties
-                        {
-                            IsPersistent = true, // for 'remember me' feature
-                    });
+                // sign-in
+                if (model.Remember)
+                {
+                    await HttpContext.SignInAsync(
+                            scheme: "SecurityScheme",
+                            principal: principal,
+                            properties: new AuthenticationProperties
+                            {
+                                IsPersistent = true, // for 'remember me' feature
+                            });
+                }
+                else
+                {
+                    await HttpContext.SignInAsync(
+                            scheme: "SecurityScheme",
+                            principal: principal,
+                            properties: new AuthenticationProperties
+                            {
+                                IsPersistent = true, // for 'remember me' feature
+                                ExpiresUtc = DateTime.UtcNow.AddDays(10)
+                            });
+                }
+                return Redirect(model.RequestPath ?? "/");
             }
-            else
-            {
-                await HttpContext.SignInAsync(
-                        scheme: "SecurityScheme",
-                        principal: principal,
-                        properties: new AuthenticationProperties
-                        {
-                            IsPersistent = true, // for 'remember me' feature
-                            ExpiresUtc = DateTime.UtcNow.AddDays(10)
-                        });
-            }
 
-            return Redirect(model.RequestPath ?? "/");
+            return View();
         }
 
         public IActionResult Register()

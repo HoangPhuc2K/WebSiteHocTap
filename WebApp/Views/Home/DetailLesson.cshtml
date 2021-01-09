@@ -193,7 +193,15 @@
                 </div>
             </div>
             <div class="col-xs-12">
-                <a class="btn btn-primary text-white">Bình Luận</a>
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <input class="btn btn-primary text-white" type="submit" value="Bình Luận" />
+                }
+                @if (!Context.User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary text-white" asp-action="Login" asp-controller="User" asp-area="Admin">content</a>
+                }
+
             </div>
         </div>
     </form>

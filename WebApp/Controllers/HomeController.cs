@@ -136,6 +136,14 @@ namespace WebApp.Controllers
             return View(lessonModel);
         }
 
+        public IActionResult IndexPost()
+        {
+            return View();
+        }
+        public IActionResult DetailPost()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

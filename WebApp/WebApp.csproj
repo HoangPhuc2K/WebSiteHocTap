@@ -25,7 +25,6 @@
     <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
     <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
     <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
-    <None Include="wwwroot\Template\js\demo\chart-area-demo.js" />
     <None Include="wwwroot\Template\js\demo\chart-bar-demo.js" />
     <None Include="wwwroot\Template\js\demo\chart-pie-demo.js" />
     <None Include="wwwroot\Template\js\demo\datatables-demo.js" />

@@ -40,6 +40,7 @@ jQueryAjaxPost = form => {
                     $('#form-modal .modal-body').html('');
                     $('#form-modal .modal-title').html('');
                     $('#form-modal').modal('hide');
+                    $('#AddOrEdit-modal').modal('show');
                 }
                 else
                     $('#form-modal .modal-body').html(res.html);
@@ -66,6 +67,7 @@ jQueryAjaxDelete = form => {
                 processData: false,
                 success: function (res) {
                     $('#view-all').html(res.html);
+                    $('#AddOrEdit-modal').modal('show');
                 },
                 error: function (err) {
                     console.log(err)
