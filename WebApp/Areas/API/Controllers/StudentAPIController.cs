@@ -88,7 +88,7 @@ namespace WebApp.Areas.API.Controllers
 
         // DELETE: api/StudentAPI/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<StudentModel>> DeleteStudentModel(int id)
+        public async Task<ActionResult<IEnumerable<StudentModel>>> DeleteStudentModel(int id)
         {
             var studentModel = await _context.Student.FindAsync(id);
             if (studentModel == null)
@@ -98,7 +98,9 @@ namespace WebApp.Areas.API.Controllers
 
             _context.Student.Remove(studentModel);
             await _context.SaveChangesAsync();
-            return studentModel;
+
+
+            return await _context.Student.ToListAsync();
         }
 
 

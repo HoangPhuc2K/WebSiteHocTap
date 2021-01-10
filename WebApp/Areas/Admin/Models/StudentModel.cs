@@ -31,7 +31,7 @@ namespace WebApp.Areas.Admin.Models
         [Required(ErrorMessage = "Vui Lòng Điền Đủ Thông Tin")]
         [Display(Name = "Số Điện Thoại")]
         [DataType(DataType.PhoneNumber)]
-        [StringLength(maximumLength: 10, ErrorMessage = "Độ dài không phù hợp", MinimumLength = 10)]
+        [StringLength(maximumLength: 10, ErrorMessage = "Số Điện Thoại Phải Đủ 10 Chữ Số", MinimumLength = 10)]
         public string Phone { get; set; }
 
         public int IdUser { get; set; }
