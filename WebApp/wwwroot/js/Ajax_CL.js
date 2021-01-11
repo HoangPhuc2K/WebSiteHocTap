@@ -32,6 +32,10 @@
                 }
                 html += ' </tbody>';
                 document.getElementById('AllStudent').innerHTML = html;
+
+                $.ajax({
+                    type: 
+                })
             })
     }
 }
