@@ -27,8 +27,13 @@ namespace WebApp.Areas.Admin.Controllers
         }
 
         // GET: Admin/Admin
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
+            if (search != null)
+            {
+                var adminContext = _context.Admin.Where(sp => sp.Status == true && sp.FullName.Contains(search)).Include(a => a.User);
+                return View(await adminContext.ToListAsync());
+            }
             var dPContext = _context.Admin.Where(sp => sp.Status == true).Include(a => a.User);
             return View(await dPContext.ToListAsync());
         }

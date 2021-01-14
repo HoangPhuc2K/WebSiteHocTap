@@ -31,15 +31,31 @@ namespace WebApp.Controllers
         {
             return View();
         }
-        public async Task<IActionResult> IndexCourse()
+        public async Task<IActionResult> IndexCourse(string search)
         {
-            List<CourseModel> listCourse = new List<CourseModel>();
-            using (var client = new HttpClient())
+            List<CourseModel> listCourse = null;
+            if (search != null)
             {
-                using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI"))
+                listCourse = new List<CourseModel>();
+                using (var client = new HttpClient())
                 {
-                    string apiResponse = await response.Content.ReadAsStringAsync();
-                    listCourse = JsonConvert.DeserializeObject<List<CourseModel>>(apiResponse);
+                    using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI/name/" + search))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        listCourse = JsonConvert.DeserializeObject<List<CourseModel>>(apiResponse);
+                    }
+                }
+            }
+            else
+            {
+                listCourse = new List<CourseModel>();
+                using (var client = new HttpClient())
+                {
+                    using (var response = await client.GetAsync("https://localhost:44379/api/CourseAPI"))
+                    {
+                        string apiResponse = await response.Content.ReadAsStringAsync();
+                        listCourse = JsonConvert.DeserializeObject<List<CourseModel>>(apiResponse);
+                    }
                 }
             }
             if(listCourse == null)

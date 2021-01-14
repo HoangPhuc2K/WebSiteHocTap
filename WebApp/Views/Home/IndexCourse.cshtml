@@ -196,6 +196,19 @@ a {
 }
     </style>
 }
+<form asp-action="IndexCourse" asp-controller="Home">
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label class="control-label">Nhập Tên</label>
+                <input name="search" class="" />
+                <input type="submit" value="Tìm" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+<hr />
+
 <div class="row">
     @foreach (var item in Model )
     {

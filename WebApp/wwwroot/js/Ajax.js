@@ -25,6 +25,33 @@ showInPopup = (url, title) => {
     })
 }
 
+function callAPIUser(url,urledit,urldetail,urldelete) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        dataType: 'json',
+        success: function (res) {
+            console.log(res);
+            $.each(res, function (index, item) {
+                if ($('#userTable tbody').length == 0) {
+                    $('#userTable').append("<tbody ></tbody >");
+                }
+                $('#userTable tbody').append(
+                    "<tr>" +
+                    "<td>" + item.accountName + "</td>" +
+                    '<td><img src="../Img/User/' + item.img +'" alt="Alternate Text" </td>' +
+                    "<td>" + item.roles.name + "</td>" +
+                    '<td> <a href ="' + urledit + '/' + item.id + '" >Edit</a>|' +
+                    '<a href ="' + urldetail + '/' + item.id + '" >Detail</a>|' +
+                    '<a href ="' + urldelete + '/' + item.id + '" >Delete</a></td>' +
+                    "</tr>"
+                );
+            });
+        }
+    })
+}
+
+
 
 jQueryAjaxPost = form => {
     try {

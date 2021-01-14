@@ -25,7 +25,7 @@ namespace WebApp.Areas.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserModel>>> GetUser()
         {
-            return await _context.User.ToListAsync();
+            return await _context.User.Where(s => s.Status == true).Include(s => s.Roles).ToListAsync();
         }
 
         // GET: api/UserAPI/5

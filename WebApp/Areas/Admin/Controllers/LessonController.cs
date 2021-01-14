@@ -62,8 +62,8 @@ namespace WebApp.Areas.Admin.Controllers
         {
             if (id == 0)
             {
-                ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "Address");
-                ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Description");
+                ViewData["IdCoach"] = new SelectList(_context.Coach, "Id", "FullName");
+                ViewData["IdCourse"] = new SelectList(_context.Course, "Id", "Title");
                 return View(new LessonModel());
             }
             else
