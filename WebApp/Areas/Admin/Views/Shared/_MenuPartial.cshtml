@@ -97,9 +97,22 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Quản Lý Quyền</span>
+                <span>Quản Lý Bình Luận</span>
             </a>
             <div id="collapseTwo5" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="CommemtLesson">Danh Sách Bình Luận</a>
+                    <a class="collapse-item" asp-action="ThongKeCommentLesson" asp-controller="CommemtLesson">Thống Kê Bình Luận</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo6" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Quyền</span>
+            </a>
+            <div id="collapseTwo6" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Chức Năng</h6>
                     <a class="collapse-item" asp-action="Index" asp-controller="Roles">Danh Sách Quyền</a>
@@ -148,7 +161,7 @@
                 </div>
             </div>
         </li>
-     }
+    }
 
     <!-- Divider -->
     <hr class="sidebar-divider">

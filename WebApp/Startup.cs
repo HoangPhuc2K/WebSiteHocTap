@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using WebApp.Realtime;
+
 
 namespace WebApp
 {
@@ -74,6 +76,7 @@ namespace WebApp
                 .AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.dasdsa
@@ -89,8 +92,9 @@ namespace WebApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -111,6 +115,8 @@ namespace WebApp
                     name: "Home",
                     pattern: "Home/Index"
                 );
+                //xu li realtime
+                endpoints.MapHub<CommentLessonRealtime>("/DetailLesson");
             });
         }
     }

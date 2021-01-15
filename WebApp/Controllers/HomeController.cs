@@ -85,6 +85,8 @@ namespace WebApp.Controllers
             ViewBag.ListCom = listCommentLesson;
             return View(listLessonModel);
         }
+
+
         public async Task<IActionResult> DetailLesson(int? id)
         {
             LessonModel lessonModel = new LessonModel();
@@ -117,7 +119,8 @@ namespace WebApp.Controllers
             List<CommemtLessonModel> listCommentLesson = new List<CommemtLessonModel>();
             using (var client = new HttpClient())
             {
-                using (var response = await client.GetAsync("https://localhost:44379/api/CommemtLessonAPI/" + lessonModel.IdCourse))
+                //Sua cho nay thanh id
+                using (var response = await client.GetAsync("https://localhost:44379/api/CommemtLessonAPI/" + id))
                 {
                     if (!response.IsSuccessStatusCode)
                     {
@@ -133,6 +136,7 @@ namespace WebApp.Controllers
             }
             ViewBag.ListLesson = listLessonModel;
             ViewBag.ListComment = listCommentLesson;
+            ViewData["IdLesson"] = id;
             return View(lessonModel);
         }
 
@@ -149,6 +153,11 @@ namespace WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult chat()
+        {
+            return View();
         }
     }
 }

@@ -153,5 +153,46 @@ namespace WebApp.Areas.Admin.Controllers
         {
             return _context.CommemtLesson.Any(e => e.Id == id);
         }
+
+        //Thong ke cmt cua moi bai viet
+        public async Task<IActionResult> ThongKeCommentLesson(int id)
+        {
+            ViewData["LessonList"] = new SelectList(_context.Lesson, "Id", "LessonName");
+            ViewData["trangthai"] = null;
+            if (id == null)
+            {
+                ViewData["trangthai"] = false;
+                return View();
+            }
+            ViewData["trangthai"] = true;
+            var dPContext = (from cmt in _context.CommemtLesson
+                             from lesson in _context.Lesson
+                             from user in _context.User
+                             join c in _context.Student on user.Id equals c.IdUser into studentGroup
+                             from student in studentGroup.DefaultIfEmpty()
+                             where 
+                             cmt.IdLesson == lesson.Id && lesson.Id == id &&
+                             user.Id == cmt.IdUser && 
+                             user.Status == true && lesson.Status == true && cmt.Status == true
+                             select new ThongKe
+                             {
+                                 LessonName = lesson.LessonName,
+                                 Content = cmt.Content,
+                                 FullName = student.FullName,
+                                 AccountName = user.AccountName
+                             }
+                             );
+            ViewBag.Data = dPContext;
+            return View();
+
+        }
+    }
+
+    public class ThongKe
+    {
+        public string LessonName;
+        public string Content;
+        public string FullName;
+        public string AccountName;
     }
 }

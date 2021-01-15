@@ -520,3 +520,6 @@ E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.csproj.C
 E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.dll
 E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.pdb
 E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\WebApp.genruntimeconfig.cache
+E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\bin\Debug\netcoreapp3.1\libman.json
+E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_PartialJS.cshtml.g.cs
+E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\CommemtLesson\ThongKeCommentLesson.cshtml.g.cs

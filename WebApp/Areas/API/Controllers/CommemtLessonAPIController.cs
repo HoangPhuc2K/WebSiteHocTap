@@ -12,6 +12,7 @@ namespace WebApp.Areas.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class CommemtLessonAPIController : ControllerBase
     {
         private readonly DPContext _context;
@@ -21,12 +22,12 @@ namespace WebApp.Areas.API.Controllers
             _context = context;
         }
 
-        // GET: api/CommemtLessonAPI
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<CommemtLessonModel>>> GetCommemtLesson()
-        {
-            return await _context.CommemtLesson.ToListAsync();
-        }
+        //// GET: api/CommemtLessonAPI
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<CommemtLessonModel>>> GetCommemtLesson()
+        //{
+        //    return await _context.CommemtLesson.ToListAsync();
+        //}
 
         // GET: api/CommemtLessonAPI/5
         [HttpGet("{id}")]
