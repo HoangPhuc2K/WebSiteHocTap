@@ -41,9 +41,12 @@ function callAPIUser(url,urledit,urldetail,urldelete) {
                     "<td>" + item.accountName + "</td>" +
                     '<td><img src="../Img/User/' + item.img +'" alt="Alternate Text" </td>' +
                     "<td>" + item.roles.name + "</td>" +
-                    '<td> <a href ="' + urledit + '/' + item.id + '" >Edit</a>|' +
-                    '<a href ="' + urldetail + '/' + item.id + '" >Detail</a>|' +
-                    '<a href ="' + urldelete + '/' + item.id + '" >Delete</a></td>' +
+                    '<td> <a href ="' + urledit + '/' + item.id + '" class="btn btn-warning text-white" >Edit</a>|' +
+                    '<a href ="' + urldetail + '/' + item.id + '" class="btn btn-info" >Detail</a>|' +
+                    '<form action="' + urldelete + '/' + item.id + '" class="d-inline"> ' +
+                    '<input type = "hidden" value="' + item.id + '" />' +
+                        ' <input type="submit" value="Xoá" class="btn btn-danger " />' + 
+                       '</form ></td>' +
                     "</tr>"
                 );
             });
