@@ -5,7 +5,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-action="Index" asp-controller="HomeAdmin">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -119,6 +119,42 @@
                 </div>
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo6" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Admin Diễn Đàn</span>
+            </a>
+            <div id="collapseTwo6" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="AdminForum">Danh Sách Quản Trị <br /> Diễn Đàn</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo7" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Thông Tin Admin</span>
+            </a>
+            <div id="collapseTwo7" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Admin">Danh Sách Quản Trị <br /> WebSite</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo8" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Quản Lý Thông Tin Giảng Viên</span>
+            </a>
+            <div id="collapseTwo8" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Chức Năng</h6>
+                    <a class="collapse-item" asp-action="Index" asp-controller="Coach">Danh Sách Giảng Viên<br /> WebSite</a>
+                </div>
+            </div>
+        </li>
     }
     @if (Context.User.IsInRole("Coach"))
     {
@@ -179,10 +215,9 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="">Login</a>
-                <a class="collapse-item" href="">Register</a>
-                <a class="collapse-item" href="">Forgot Password</a>
+                <h6 class="collapse-header">Màng Hình Đăng Nhập</h6>
+                <a class="collapse-item" asp-action="Login" asp-controller="User">Đăng nhập</a>
+                <a class="collapse-item" asp-action="Register" asp-controller="User">Đăng kí</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Other Pages:</h6>
                 <a class="collapse-item" href="">404 Page</a>
@@ -195,7 +230,7 @@
     <li class="nav-item">
         <a class="nav-link" href="charts.html">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span>
+            <span>Biểu đồ</span>
         </a>
     </li>
 
@@ -203,7 +238,7 @@
     <li class="nav-item">
         <a class="nav-link" href="tables.html">
             <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span>
+            <span>Thống kê</span>
         </a>
     </li>
 

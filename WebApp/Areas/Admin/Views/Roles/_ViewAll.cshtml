@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Roles History</h1>
+<h1 class="text-center">Danh Sách Quyền</h1>
 
 <p>
     <a class="btn btn-success" onclick="showInPopup('@Url.Action("AddOrEdit","Roles",null,Context.Request.Scheme)','New Roles')">Create New</a>
 </p>
-<table class="table">
+<table class="table" id="userTable">
     <thead>
         <tr>
             <th>
@@ -18,7 +18,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody id="rolestable">
+    <tbody>
         @foreach (var item in Model)
         {
             <tr>

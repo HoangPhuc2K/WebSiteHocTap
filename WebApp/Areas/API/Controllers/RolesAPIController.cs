@@ -25,7 +25,7 @@ namespace WebApp.Areas.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RolesModel>>> GetRoles()
         {
-            return await _context.Roles.ToListAsync();
+            return await _context.Roles.Where(s => s.Status == true).ToListAsync();
         }
 
         // GET: api/RolesAPI/5

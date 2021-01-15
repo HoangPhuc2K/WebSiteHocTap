@@ -70,7 +70,7 @@ namespace WebApp.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Description,Lang")] CourseModel courseModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Id,Title,Description,Lang,Img")] CourseModel courseModel)
         {
             if (ModelState.IsValid)
             {

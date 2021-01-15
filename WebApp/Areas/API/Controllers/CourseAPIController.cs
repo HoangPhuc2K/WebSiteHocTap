@@ -41,6 +41,19 @@ namespace WebApp.Areas.API.Controllers
 
             return courseModel;
         }
+        // GET: api/CourseAPI/5
+        [HttpGet("name/{search}")]
+        public async Task<ActionResult<IEnumerable<CourseModel>>> GetCourseModel(string search)
+        {
+            var courseModel = await _context.Course.Where(s => s.Title.Contains(search)).ToListAsync();
+
+            if (courseModel == null)
+            {
+                return NotFound();
+            }
+
+            return courseModel;
+        }
 
         // PUT: api/CourseAPI/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

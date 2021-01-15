@@ -258,6 +258,7 @@ D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebA
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\Index.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\IndexPost.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Views\Home\DetailPost.cshtml.g.cs
+D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\HomeAdmin\Statistical.cshtml.g.cs
 D:\N_3_HK_1\LT WEB ASP.NET core\DoAn\Project\WebApp\obj\Debug\netcoreapp3.1\WebApp.csprojAssemblyReference.cache
 E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\bin\Debug\netcoreapp3.1\appsettings.Development.json
 E:\Do an\DoAnAspNet\WebSiteHocTap\WebApp\bin\Debug\netcoreapp3.1\appsettings.json
