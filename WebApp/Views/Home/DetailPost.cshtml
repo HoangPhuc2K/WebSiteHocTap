@@ -1,4 +1,8 @@
-﻿
+﻿@model  IEnumerable<WebApp.Controllers.HomeController.PostIndex>
+@{ 
+    ViewData["Title"] = "Post Page";
+    var listComment = ViewBag.ListComment as IEnumerable<WebApp.Areas.Admin.Models.CommemtPostModel>;
+}
 @section CSS{
     <style>
         .be-comment-block {
@@ -111,19 +115,162 @@
         .form-group textarea.form-input {
             height: 150px;
         }
+        ul {
+            list-style: none;
+        }
     </style>
 }
 <div class="row">
     <div class="col-xl-12 col-lg-12">
 
         <!-- Area Chart -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Nội Dung</h6>
+        @foreach (var item in Model)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <img src="~/Img//User/@item.Img" class="rounded-circle" style="width:20px" alt="Alternate Text" />
+                    <span>@item.name</span>|
+                    <span>Roles: @item.roles</span>
+                </div>
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Nội Dung</h6>
+                </div>
+                <div class="card-body overflow-auto">
+                        @Html.Raw(item.Content)
+                </div>
             </div>
-            <div class="card-body overflow-auto">
-                @*//Noi dung*@
+        }
+        </div>
+</div>
+<div class="be-comment-block">
+    <h1 class="comments-title">Comments (3)</h1>
+    <ul id="commentPost">
+   @if (listComment != null)
+    {
+        @foreach (var item in listComment)
+        {
+            <li>
+                <div class="be-comment">
+                    <div class="be-img-comment">
+                        <a href="blog-detail-2.html">
+                            <img src="~/Img/User/@item.User.Img" alt="" class="be-ava-comment">
+                        </a>
+                    </div>
+                    <div class="be-comment-content">
+                        <span class="be-comment-name">
+                            <h5>
+                                @item.User.AccountName
+                            </h5>
+                        </span>
+                        <p class="be-comment-text">
+                            @item.Content
+                        </p>
+                    </div>
+                </div>
+            </li>
+        }
+    }
+    </ul>
+    <form class="form-block">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <textarea class="form-input" placeholder="Nội dung bình luận" id="messageInput"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    //Lay du lieu ve tai khoan dang dang nhap
+                    string img = "";
+                    string id = "";
+                    img = Context.User.Claims.ToList()[3].Value;
+                    id = Context.User.Claims.ToList()[2].Value;
+                    <input class="btn btn-primary text-white" type="button" id="sendButton" value="Bình luận" />
+                    <input type="hidden" value="@Context.User.Identity.Name" id="userInput" />
+                    <input type="hidden" value="/Img/User/@img" id="avatarInput" />
+                    <input type="hidden" value="@id" id="idInput" />
+                    <input type="hidden" value="@Model.First().idPost" id="idPostInput" />
+                }
+                @if (!Context.User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary text-white" asp-action="Login" asp-controller="User" asp-area="Admin">Đăng nhập</a>
+                }
             </div>
         </div>
-    </div>
+    </form>
 </div>
+@section JS{
+
+    <script>
+            "use strict";
+
+            var connection = new signalR.HubConnectionBuilder().withUrl("/DetailPost").build();
+
+            //Disable send button until connection is established
+            document.getElementById("sendButton").disabled = true;
+
+            //Tạo ra khung html để đưa lên 
+            connection.on("ReceiveMessage", function (user, message, avatar) {
+
+
+
+                var html = '';
+                html += '<div class="be-comment"> ';
+                html += '<div class="be-img-comment"> ';
+                html += '<a href="blog-detail-2.html"> ';
+                html += '<img src="' + avatar + '" alt="" class="be-ava-comment"> ';
+                html += '</a> ';
+                html += '</div> ';
+                html += '<div class="be-comment-content"> ';
+                html += '<span class="be-comment-name"> ';
+                html += '<h5>' + user + '</h5> ';
+                html += '</span> ';
+                html += '<p class="be-comment-text"> ';
+                html += ' ' + message;
+                html += '  </p> ';
+                html += '  </div> ';
+                html += '  </div> ';
+                var cmt = document.createElement("LI");
+                cmt.innerHTML = html
+                document.getElementById("commentPost").appendChild(cmt);
+                document.getElementById("messageInput").value = "";
+
+            });
+
+            //kết nối
+            connection.start().then(function () {
+                document.getElementById("sendButton").disabled = false;
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
+
+            //Xu li click
+            document.getElementById("sendButton").addEventListener("click", function (event) {
+
+                var avatar = document.getElementById("avatarInput").value;
+                var user = document.getElementById("userInput").value;
+                var message = document.getElementById("messageInput").value;
+                var idUser = document.getElementById("idInput").value;
+                var idLesson = document.getElementById("idPostInput").value;
+
+                // Dua du lieu len api de luu vao csdl
+                var data = { "Title": "Đây là một comment", "Content": message, "IdPost": idLesson, "IdUser": idUser };
+                var json = JSON.stringify(data);
+                $.ajax({
+                    method: 'POST',
+                    url: 'https://localhost:44379/api/CommemtPostAPI',
+                    contentType: 'application/json',
+                    accepts: 'application/json',
+                    data: json,
+                })
+                connection.invoke("SendMessage", user, message, avatar).catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+
+
+                event.preventDefault();
+            });
+    </script>
+ }

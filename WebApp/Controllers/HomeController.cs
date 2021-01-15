@@ -58,7 +58,7 @@ namespace WebApp.Controllers
                     }
                 }
             }
-            if(listCourse == null)
+            if (listCourse == null)
             {
                 return NotFound();
             }
@@ -131,7 +131,7 @@ namespace WebApp.Controllers
                     listLessonModel = JsonConvert.DeserializeObject<List<LessonModel>>(apiResponse);
                 }
             }
-            
+
             List<CommemtLessonModel> listCommentLesson = new List<CommemtLessonModel>();
             using (var client = new HttpClient())
             {
@@ -158,11 +158,50 @@ namespace WebApp.Controllers
 
         public IActionResult IndexPost()
         {
-            return View();
+            var listPost = from s in _context.Post
+                           join p in _context.User on
+                           s.IdUser equals p.Id into muserGroup
+                           from m in muserGroup.DefaultIfEmpty()
+                           join roles in _context.Roles on
+                           m.IdRoles equals roles.Id into mgr
+                           from k in mgr.DefaultIfEmpty()
+                           where s.Status == true && m.Status == true &&
+                           k.Status == true
+                           select new PostIndex
+                           {
+                               idPost = s.Id,
+                               Title = s.Title,
+                               Description = s.Descripsion,
+                               Img = m.Img,
+                               roles = k.Name,
+                           };
+            ViewBag.ListCom = _context.CommemtPost.ToList();
+
+            return View(listPost.ToList());
         }
-        public IActionResult DetailPost()
+        public IActionResult DetailPost(int id)
         {
-            return View();
+            var postdetail = from s in _context.Post
+                           join p in _context.User on
+                           s.IdUser equals p.Id into muserGroup
+                           from m in muserGroup.DefaultIfEmpty()
+                           join roles in _context.Roles on
+                           m.IdRoles equals roles.Id into mgr
+                           from k in mgr.DefaultIfEmpty()
+                           where s.Status == true && m.Status == true &&
+                           k.Status == true && s.Id == id
+                           select new PostIndex
+                           {
+                               idPost = s.Id,
+                               name = m.AccountName,
+                               Title = s.Title,
+                               Description = s.Descripsion,
+                               Img = m.Img,
+                               roles = k.Name,
+                               Content = s.Content
+                           };
+            ViewBag.ListComment = _context.CommemtPost.Where(s => s.IdPost == id).Include(sp => sp.User).ToList();
+            return View(postdetail.ToList());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -174,6 +213,17 @@ namespace WebApp.Controllers
         public IActionResult chat()
         {
             return View();
+        }
+        public class PostIndex
+        {
+            public string Img;
+            public string Title;
+            public string Description;
+            public string roles;
+            public int countComment;
+            public int idPost;
+            public string Content;
+            public string name;
         }
     }
 }

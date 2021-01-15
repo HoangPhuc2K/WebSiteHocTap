@@ -1,4 +1,8 @@
-﻿@section CSS {
+﻿@model IEnumerable<WebApp.Controllers.HomeController.PostIndex>
+@{ 
+    var listPost = ViewBag.ListCom as List<WebApp.Areas.Admin.Controllers.CommemtPostController>;
+}
+@section CSS {
     <style>
     @@media (min-width: 992px) {
         .home-blog {
@@ -73,7 +77,7 @@
             min-width: 230px;
         }
     }
-    .media.blog-media > a:before {
+ /*   .media.blog-media > a:before {
         position: absolute;
         content: "";
         top: 15px;
@@ -84,7 +88,7 @@
         transform: scale(0);
         transition: transform 0.3s ease, opacity 0.3s;
         background: rgba(12, 198, 82, 0.7);
-    }
+    }*/
     .media.blog-media > a img {
         width: 100%;
     }
@@ -195,22 +199,41 @@
 <section class="home-blog bg-sand">
     <div class="container">
         <!-- section title ends -->
-        <div class="row ">
+        <div class="row" >
+            @foreach (var item in Model)
+            {
+                SelectList com = null;
+                int comUn = 0;
+                if (listPost != null)
+                {
+                     com = new SelectList(listPost, "idPost", "Content", item.idPost);
+                }
             <div class="col-md-6">
                 <div class="media blog-media">
-                    <a href="blog-post-left-sidebar.html"><img class="d-flex" src="https://via.placeholder.com/350x380/6495ED/000000" alt="Generic placeholder image"></a>
-                    <div class="media-body">
-                        <a href=""><h5 class="mt-0">Standard Blog Post</h5></a>
-                        Sodales aliquid, in eget ac cupidatat velit autem numquam ullam ducimus occaecati placeat error.
-                        <a href="blog-post-left-sidebar.html" class="post-link">Read More</a>
+                    <a asp-action="DetailPost" asp-controller="Home" asp-route-id="@item.idPost"><img  class="d-flex w-100" src="~/Img//User/@item.Img" alt="Generic placeholder image"></a>
+                    <div class="media-body w-100">
+                        <a asp-action="DetailPost" asp-controller="Home" asp-route-id="@item.idPost"><h5 class="mt-0">@item.Title</h5></a>
+                        @item.Description
+                        <a asp-action="DetailPost" asp-controller="Home" asp-route-id="@item.idPost" class="post-link">Đọc ngay</a>
                         <ul>
-                            <li>by: Admin</li>
-                            <li class="text-right"><a href="blog-post-left-sidebar.html">07 comments</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
+                            <li>by: @item.roles</li>
+                            <li class="text-right"><a href="blog-post-left-sidebar.html">
+                                @if (com != null)
+                                {
+                                    @com.Count()
+                                }
+                                @if (com == null) { @comUn }
+                                comments</a></li>
+
+                       </ul>
+
+                   </div>
+
+               </div>
+
+           </div>
+            }
+            @*<div class="col-md-6">
                 <div class="media blog-media">
                     <a href="blog-post-left-sidebar.html"><img class="d-flex" src="https://via.placeholder.com/350x380/FFB6C1/000000" alt="Generic placeholder image"></a>
                     <div class="media-body">
@@ -255,7 +278,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>*@
         </div>
     </div>
 </section>

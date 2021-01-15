@@ -117,6 +117,7 @@ namespace WebApp
                 );
                 //xu li realtime
                 endpoints.MapHub<CommentLessonRealtime>("/DetailLesson");
+                endpoints.MapHub<CommentPostRealtime>("/DetailPost");
             });
         }
     }
